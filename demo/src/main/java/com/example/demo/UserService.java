@@ -13,8 +13,7 @@ import java.util.List;
 public class UserService {
     @Autowired
     private UserRepo userRepo;
-    @Autowired
-    private RoleRepo roleRepo;
+
     @RequestMapping(value="/adduser")
     public User save(User u){
         return userRepo.save(u);
@@ -22,22 +21,9 @@ public class UserService {
     @GetMapping("/findUsers")
     public List<User> findAll()
     {return userRepo.findAll();}
-    @RequestMapping(value="/addrole")
-    public Role saveRole(Role role){
-        return roleRepo.save(role);
-    }
-    @GetMapping("/findRoles")
-    public List<Role> findAllRoles()
-    {return roleRepo.findAll();}
-    @RequestMapping(value="/addRoleToUser")
-   public User addRoleToUser(String username,String role){
 
-       User u = userRepo.findOneByUsername(username);
-        Role r= roleRepo.findOneByRole(role);
-      u.getRoles().add(r);
-      userRepo.save(u);
-      return u;
+
    }
 
-}
+
 
