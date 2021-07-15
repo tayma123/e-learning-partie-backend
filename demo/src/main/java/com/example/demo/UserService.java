@@ -1,7 +1,9 @@
 package com.example.demo;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,8 @@ import java.util.List;
 @RestController
 @Secured(value="ROLE_ADMIN")
 public class UserService {
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepo userRepo;
 
@@ -23,7 +27,8 @@ public class UserService {
     {return userRepo.findAll();}
 
 
-   }
+
+}
 
 
 

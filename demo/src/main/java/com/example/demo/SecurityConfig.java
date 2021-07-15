@@ -22,7 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     {
           /*  auth.inMemoryAuthentication().withUser("admin").password("123").roles("ADMIN");
         auth.inMemoryAuthentication().withUser("apprenant").password("123").roles("APPRENANT");
+
                 */
+
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
         .usersByUsernameQuery("select username as principal,password as credentials,true from users where username=?")
@@ -39,8 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                    .authenticated()
                      .and()
                .formLogin()
-                  .loginPage("/login")
-                  .permitAll()
               .defaultSuccessUrl("/index.html");
     }
     @SuppressWarnings("deprecation")

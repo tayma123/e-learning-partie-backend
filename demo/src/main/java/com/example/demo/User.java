@@ -14,7 +14,7 @@ public class User implements Serializable {
     @Column(unique=true)
     private String username;
     private String password;
-    private Date dateNaissance;
+    private String dateNaissance;
     private String nom;
     private String prenom;
 
@@ -25,7 +25,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Long id, String username, String password, Date dateNaissance, String nom, String prenom, Boolean actived, Role role) {
+    public User(Long id, String username, String password, String dateNaissance, String nom, String prenom, Boolean actived, Role role) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -33,6 +33,15 @@ public class User implements Serializable {
         this.nom = nom;
         this.prenom = prenom;
         this.actived = actived;
+        this.role = role;
+    }
+
+    public User(String username, String password, String dateNaissance, String nom, String prenom, Role role) {
+        this.username = username;
+        this.password = password;
+        this.dateNaissance = dateNaissance;
+        this.nom = nom;
+        this.prenom = prenom;
         this.role = role;
     }
 
@@ -44,11 +53,11 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public Date getDateNaissance() {
+    public String getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Date dateNaissance) {
+    public void setDateNaissance(String dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
@@ -106,3 +115,4 @@ public class User implements Serializable {
         this.role = role;
     }
 }
+
