@@ -1,10 +1,14 @@
-package com.example.demo;
+package com.example.demo.Service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.Repo.UserRepo;
+import com.example.demo.model.User;
+import com.example.demo.model.UserRegistrationDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserServiceImpl implements  UserServiice{
+public class UserServiceImpl implements UserServiice {
 
    private UserRepo userRepo;
 

@@ -14,17 +14,7 @@ import java.util.List;
 public class DemoApplication {
 	 public static void main(String[] args) {
 
-		 ConfigurableApplicationContext ctx=  SpringApplication.run(DemoApplication.class, args);
-	ApprenantRepository apprenantRepository=ctx.getBean(ApprenantRepository.class);
-		 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		 try {
-			 apprenantRepository.save(new Apprenant("tayma","benhmida",df.parse("1998-07-13")));
-		   List<Apprenant> apps=apprenantRepository.findAll();
-		 } catch (ParseException e) {
-			 e.printStackTrace();
-		 }
-
+		 SpringApplication.run(DemoApplication.class, args);
 
 	 }
-
 }

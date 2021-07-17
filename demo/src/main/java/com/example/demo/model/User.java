@@ -1,9 +1,7 @@
-package com.example.demo;
+package com.example.demo.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Date;
 
 @Entity
 @Table(name = "users")

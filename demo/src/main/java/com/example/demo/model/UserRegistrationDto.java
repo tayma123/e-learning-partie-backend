@@ -1,7 +1,6 @@
-package com.example.demo;
+package com.example.demo.model;
 
-import javax.persistence.*;
-import java.util.Date;
+import com.example.demo.model.Role;
 
 public class UserRegistrationDto {
 
