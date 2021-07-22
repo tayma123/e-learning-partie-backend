@@ -3,8 +3,7 @@ package com.example.demo.Controller;
 import com.example.demo.Repo.UserRepo;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 @RestController
 public class UserController {
-        @Autowired
-        PasswordEncoder passwordEncoder;
+       /* @Autowired
+        PasswordEncoder passwordEncoder;*/
         @Autowired
         private UserRepo userRepo;
 
