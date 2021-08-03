@@ -54,6 +54,14 @@ public class Cours implements Serializable {
     public void setCatégorie(Catégorie catégorie) {
         this.catégorie = catégorie;
     }
+    public void addQuiz(Quiz quiz) {
+        if (quizList.contains(quiz))
+            return;
+
+        quizList.add(quiz);
+
+        quiz.setCours(this);
+    }
 
     public Cours() {
     }

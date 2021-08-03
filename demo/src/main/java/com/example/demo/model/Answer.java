@@ -8,22 +8,27 @@ public class Answer implements Serializable {
     @Id
     @GeneratedValue
     private Long idAnswer;
-    private String answerText;
-    private Boolean isCorrect;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="idQs")
     private  Question question;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="idAnswerQ")
-    private  QuizAnswer quizAnswer;
+    @JoinColumn(name="idQ")
+    private  Quiz quiz;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offeredAnswerId")
+    private Options option;
     public Answer() {
     }
 
-    public Answer(Long idAnswer, String answerText, Boolean isCorrect, Question question) {
+    public Answer(Long idAnswer, Question question, User user, Options option) {
         this.idAnswer = idAnswer;
-        this.answerText = answerText;
-        this.isCorrect = isCorrect;
         this.question = question;
+        this.quiz = question.getQuiz();
+        this.user = user;
+        this.option = option;
     }
 
     public Long getIdAnswer() {
@@ -34,20 +39,25 @@ public class Answer implements Serializable {
         this.idAnswer = idAnswer;
     }
 
-    public String getAnswerText() {
-        return answerText;
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 
-    public void setAnswerText(String answerText) {
-        this.answerText = answerText;
+    public User getUser() {
+        return user;
     }
 
-    public Boolean getCorrect() {
-        return isCorrect;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setCorrect(Boolean correct) {
-        isCorrect = correct;
+    public Options getOption() {
+        return option;
+    }
+
+    public void setOption(Options option) {
+        this.option = option;
     }
 
     public Question getQuestion() {
@@ -58,11 +68,11 @@ public class Answer implements Serializable {
         this.question = question;
     }
 
-    public QuizAnswer getQuizAnswer() {
-        return quizAnswer;
+    public Quiz getQuiz() {
+        return question.getQuiz();
     }
 
-    public void setQuizAnswer(QuizAnswer quizAnswer) {
-        this.quizAnswer = quizAnswer;
+    public void setQuiz() {
+        this.quiz = this.question.getQuiz();
     }
 }

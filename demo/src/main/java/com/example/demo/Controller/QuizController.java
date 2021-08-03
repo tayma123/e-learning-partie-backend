@@ -48,10 +48,11 @@ public class QuizController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/add/{idQ}")
-    public ResponseEntity<Quiz> addQuiz(@RequestBody Quiz quiz , @PathVariable("idQ") Long idQ) {
-        Cours cours=coursService.findCoursById(idQ);
+    @PostMapping("/add/{idCr}")
+    public ResponseEntity<Quiz> addQuiz(@RequestBody Quiz quiz , @PathVariable("idCr") Long idCr) {
+        Cours cours=coursService.findCoursById(idCr);
         quiz.setCours(cours);
+
         Quiz newQuiz = quizService.save(quiz);
         return new ResponseEntity<>(newQuiz, HttpStatus.CREATED);
     }

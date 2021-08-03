@@ -19,17 +19,18 @@ public class UserServiceImpl implements UserServiice {
           super();
           this.userRepo=userRepo;
       }
+      //Registration
     @Override
     public User save(UserRegistrationDto registrationDto) {
        User user = new User(registrationDto.getUsername(),registrationDto.getPassword(),registrationDto.getDateNaissance(),registrationDto.getNom(),registrationDto.getPrenom(),registrationDto.getRole());
 
        return userRepo.save(user);
     }
+    //Find alla user by username
     public List<User> listAll() {
         return userRepo.findAll(Sort.by("username").ascending());
     }
-
-
+    //delete User
     public void deleteUser(String username) {
         userRepo.deleteUserByUsername(username);
 

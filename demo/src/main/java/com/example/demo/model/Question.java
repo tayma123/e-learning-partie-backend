@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class Question implements Serializable {
@@ -9,10 +10,9 @@ public class Question implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idQs;
     private String question;
-    private String response1;
-    private String response2;
-    private String response3;
-    private String correct;
+
+    @OneToMany(mappedBy = "question")
+    private List<Options> optionsList;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="idQ")
     private  Quiz quiz;
@@ -20,13 +20,10 @@ public class Question implements Serializable {
     public Question() {
     }
 
-    public Question(Long idQs, String question, String response1, String response2, String response3, String correct) {
+    public Question(Long idQs, String question) {
         this.idQs = idQs;
         this.question = question;
-        this.response1 = response1;
-        this.response2 = response2;
-        this.response3 = response3;
-        this.correct = correct;
+
     }
 
     public Long getIdQs() {
@@ -45,37 +42,6 @@ public class Question implements Serializable {
         this.question = question;
     }
 
-    public String getResponse1() {
-        return response1;
-    }
-
-    public void setResponse1(String response1) {
-        this.response1 = response1;
-    }
-
-    public String getResponse2() {
-        return response2;
-    }
-
-    public void setResponse2(String response2) {
-        this.response2 = response2;
-    }
-
-    public String getResponse3() {
-        return response3;
-    }
-
-    public void setResponse3(String response3) {
-        this.response3 = response3;
-    }
-
-    public String getCorrect() {
-        return correct;
-    }
-
-    public void setCorrect(String correct) {
-        this.correct = correct;
-    }
 
     public Quiz getQuiz() {
         return quiz;
@@ -85,15 +51,19 @@ public class Question implements Serializable {
         this.quiz = quiz;
     }
 
+    public List<Options> getOptionsList() {
+        return optionsList;
+    }
+
+    public void setOptionsList(List<Options> optionsList) {
+        this.optionsList = optionsList;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
                 "idQs=" + idQs +
                 ", question='" + question + '\'' +
-                ", response1='" + response1 + '\'' +
-                ", response2='" + response2 + '\'' +
-                ", response3='" + response3 + '\'' +
-                ", correct='" + correct + '\'' +
                 ", quiz=" + quiz +
                 '}';
     }

@@ -4,19 +4,19 @@
     <title>Register</title>
 </head>
 <body>
-<form action="#" th:action="@{/register}" th:object="${userEntity}" method="post">
+<form action="#" th:action="@{/register}" th:object="${user}" method="post">
     <table>
         <tr>
             <td><label >First Name</label></td>
-            <td><input th:field="*{firstName}" type="text" name="firstName"></input></td>
+            <td><input th:field="*{nom}" type="text" name="nom"></input></td>
         </tr>
         <tr>
             <td><label >Last Name</label></td>
-            <td><input th:field="*{lastName}" type="text" name="lastName"></input></td>
+            <td><input th:field="*{prenom}" type="text" name="prenom"></input></td>
         </tr>
         <tr>
             <td><label>Email</label></td>
-            <td><input th:field="*{emailId}" type="text" name="emailId"></input></td>
+            <td><input th:field="*{username}" type="text" name="username"></input></td>
         </tr>
         <tr>
             <td><label>Password</label></td>
