@@ -3,11 +3,14 @@ package com.example.demo.Service;
 import com.example.demo.Repo.UserRepo;
 import com.example.demo.model.User;
 import com.example.demo.model.UserRegistrationDto;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserServiice {
 
    private UserRepo userRepo;
@@ -22,5 +25,13 @@ public class UserServiceImpl implements UserServiice {
 
        return userRepo.save(user);
     }
+    public List<User> listAll() {
+        return userRepo.findAll(Sort.by("username").ascending());
+    }
 
+
+    public void deleteUser(String username) {
+        userRepo.deleteUserByUsername(username);
+
+    }
 }

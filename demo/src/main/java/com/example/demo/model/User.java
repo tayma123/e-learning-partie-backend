@@ -2,12 +2,14 @@ package com.example.demo.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(unique=true)
     private String username;
@@ -19,7 +21,12 @@ public class User implements Serializable {
     private Boolean actived;
     @Enumerated(EnumType.STRING)
     private Role role;
-
+    @ManyToMany
+    @JoinTable(
+            name = "course_like",
+            joinColumns = @JoinColumn(name = "apprenant_id"),
+            inverseJoinColumns = @JoinColumn(name = "cours_id"))
+    Set<Cours> likedCourses;
     public User() {
     }
 

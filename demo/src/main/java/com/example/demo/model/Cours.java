@@ -3,6 +3,7 @@ package com.example.demo.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Cours implements Serializable {
@@ -17,6 +18,10 @@ public class Cours implements Serializable {
 
     @OneToMany(mappedBy = "cours")
     private List<Quiz> quizList;
+    @OneToMany(mappedBy = "cours")
+    private List<Certificat> certificatlist;
+    @ManyToMany(mappedBy = "likedCourses")
+    Set<User> likes;
 
     public Long getIdCr() {
         return idCr;

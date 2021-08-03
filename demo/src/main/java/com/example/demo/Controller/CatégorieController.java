@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/categorie")
 
 public class CatégorieController {
     private  final CatégorieService catégorieService;
@@ -29,7 +32,7 @@ public class CatégorieController {
         return new ResponseEntity<>(catégorie, HttpStatus.OK);
     }
     @PostMapping("/add")
-    public ResponseEntity<Catégorie> addUser(@RequestBody Catégorie catégorie){
+    public ResponseEntity<Catégorie> addCatégorie(@RequestBody Catégorie catégorie){
         Catégorie newCatégorie= catégorieService.addCatégorie(catégorie);
         return new ResponseEntity<>(newCatégorie, HttpStatus.CREATED);
     }

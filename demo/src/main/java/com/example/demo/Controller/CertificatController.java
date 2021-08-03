@@ -1,27 +1,26 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Repo.CertificatRepo;
-import com.example.demo.Service.ExportCertificatService;
-import com.example.demo.model.Certificat;
+import com.example.demo.Repo.UserRepo;
+import com.example.demo.Service.ExportService;
+import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.ByteArrayInputStream;
-import java.util.List;
+import java.util.Optional;
 
 public class CertificatController {
     @Autowired
-    CertificatRepo certificatRepo;
+    private CertificatRepo certificatRepo;
     @Autowired
-    private ExportCertificatService exportCertificatService;
-    @GetMapping("/export/pdf")
-    @PreAuthorize("hasRole('APPRENANT') or hasRole('ADMIN')")
-   public ResponseEntity<InputStreamResource> exportTermsPdf(){
-        (List<Certificat>) certificats=List<Certificat> certificatRepo.findCertificatByUserId(user.get().getId());
-        ByteArrayInputStream bais= exportCertificatService.certificatPDFReport(certificats);
-    }
-
+    ExportService exportService;
 
 }

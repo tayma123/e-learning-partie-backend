@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface CatégorieRepo  extends JpaRepository<Catégorie,String> {
+public interface CatégorieRepo  extends JpaRepository<Catégorie,Long> {
 
     void deleteCatégorieByIdCt(Long idCt);
 
@@ -17,7 +17,7 @@ public interface CatégorieRepo  extends JpaRepository<Catégorie,String> {
 
     Optional<Catégorie> findCatégorieByIdCt(Long idCt);
     @Modifying
-    @Query("delete from Cours where Name=?1")
+    @Query("delete from Catégorie where NomC=?1")
     void deleteCatégorieByNomC(String NomC);
 
 

@@ -3,10 +3,13 @@ package com.example.demo.Service;
 import com.example.demo.Exception.CoursNotFoundException;
 import com.example.demo.Repo.CatégorieRepo;
 import com.example.demo.model.Catégorie;
+import org.springframework.stereotype.Service;
 
 
+import javax.transaction.Transactional;
 import java.util.List;
-
+@Service
+@Transactional
 public class CatégorieService {
 
     private final CatégorieRepo catégorieRepo;
@@ -40,6 +43,7 @@ public class CatégorieService {
 
     public void deleteCatégorie(String NomC) {
         catégorieRepo.deleteCatégorieByNomC(NomC);
+
     }
 
     public Catégorie findCatégorieByNomC(String NomC) {

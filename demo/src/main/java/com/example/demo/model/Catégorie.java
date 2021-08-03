@@ -30,6 +30,10 @@ public class Catégorie implements Serializable {
         this.nomC = nomC;
     }
 
+    public Catégorie(String nomC) {
+        this.nomC = nomC;
+    }
+
     public Long getIdCt() {
         return idCt;
     }
