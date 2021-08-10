@@ -50,6 +50,7 @@ JwtUtils {
         final String username=extractUsername(token);
         return (username.equals(UserDetails.getUsername())&&!isTokenExpired(token));
     }
+
     public String generateToken (String username){
         Map<String,Object> claims= new HashMap<>();
         return createToken(claims,username);

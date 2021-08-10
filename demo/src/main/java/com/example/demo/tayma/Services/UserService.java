@@ -65,6 +65,8 @@ public class UserService {
         user.setGender(userTest.getGender());
         user.setAdress(userTest.getAdress());
 
+
+
         if (userTest.getPassWord().length()<5){
             return  new ResponseEntity<>(new ErrorModel("Short PassWord"),HttpStatus.BAD_REQUEST); }
         String password = passwordEncoder().encode(userTest.getPassWord());

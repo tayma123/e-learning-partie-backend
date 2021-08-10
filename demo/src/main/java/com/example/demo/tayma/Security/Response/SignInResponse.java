@@ -6,12 +6,12 @@ import java.util.Collection;
 public  class SignInResponse {
     private String token;
     private String type = "Bearer";
-    private String username;
+    private String userName;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public SignInResponse(String accessToken, String username, Collection<? extends GrantedAuthority> authorities) {
+    public SignInResponse(String accessToken, String userName, Collection<? extends GrantedAuthority> authorities) {
         this.token = accessToken;
-        this.username = username;
+        this.userName = userName;
         this.authorities = authorities;
     }
 
@@ -32,11 +32,11 @@ public  class SignInResponse {
     }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.userName = username;
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

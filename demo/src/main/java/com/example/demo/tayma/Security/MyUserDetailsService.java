@@ -19,16 +19,16 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User1> userOptional=userRepository.findByUserName(username);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        Optional<User1> userOptional=userRepository.findByUserName(userName);
 
         if (!userOptional.isPresent())
-            throw new UsernameNotFoundException("User not exist with name :" +username);
+            throw new UsernameNotFoundException("User not exist with name :" +userName);
         String pass=userOptional.get().getPassWord();
 
 
 
-        return new org.springframework.security.core.userdetails.User (username,pass, Collections.singleton(userOptional.get().getRole()));
+        return new org.springframework.security.core.userdetails.User (userName,pass, Collections.singleton(userOptional.get().getRole()));
 
     }}
 
