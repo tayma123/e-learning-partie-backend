@@ -26,6 +26,7 @@ public class User1 implements Serializable {
     private String userName ;
     private String passWord ;
     private String adress;
+    private boolean isEnabled;
     @Enumerated(EnumType.STRING)
     private Role role;
     @ManyToMany
@@ -94,6 +95,13 @@ public class User1 implements Serializable {
         this.adress = adress;
     }
 
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
 
     public Role getRole() {
         return role;
@@ -102,6 +110,7 @@ public class User1 implements Serializable {
     public void setRole(Role role) {
         this.role = role;
     }
+
 
 
     public User1() {
@@ -129,6 +138,19 @@ public class User1 implements Serializable {
         this.userName = userName;
         this.passWord = passWord;
         this.adress = adress;
+        this.role = role;
+    }
+
+    public User1(String firstName, String lastName, String email, String telephone, String gender, String userName, String passWord, String adress, boolean isEnabled, Role role) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.telephone = telephone;
+        this.gender = gender;
+        this.userName = userName;
+        this.passWord = passWord;
+        this.adress = adress;
+        this.isEnabled = isEnabled;
         this.role = role;
     }
 }

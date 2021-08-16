@@ -9,12 +9,16 @@ import com.example.demo.tayma.Security.JwtUtils;
 import com.example.demo.tayma.Security.Request.LoginForm;
 import com.example.demo.tayma.Security.Request.SignUpForm;
 import com.example.demo.tayma.Security.Response.SignInResponse;
+import com.example.demo.tayma.mail.ConfirmationToken;
+import com.example.demo.tayma.mail.ConfirmationTokenRepository;
+import com.example.demo.tayma.mail.EmailService;
 import com.example.demo.tayma.utils.ErrorModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,58 +27,41 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Configuration
-
+@Transactional
 @EnableWebSecurity
 public class UserService {
     @Autowired
     UserRepository userRepository;
-
+ @Autowired
+ ConfirmationTokenRepository confirmationTokenRepository;
+    @Autowired
+    EmailService emailService;
     @Autowired
     JwtUtils jwtUtils ;
     @Autowired
     AuthenticationManager authenticationManager;
 
     public ResponseEntity<?> addUser(UserTest userTest){
-
-
-
         User1 user=new User1();
-        if (userRepository.findByUserName(userTest.getUserName()).isPresent()){
-            return  new ResponseEntity<>(new ErrorModel("user name is used"),HttpStatus.BAD_REQUEST);
-        }
-        if (userRepository.findByEmail(userTest.getEmail()).isPresent()){
-            return  new ResponseEntity<>(new ErrorModel(" Email is  used"),HttpStatus.BAD_REQUEST);
-        }
-        if(!isValidEmailAddress(userTest.getEmail())){
-            return  new ResponseEntity<>(new ErrorModel("Invalid email"),HttpStatus.BAD_REQUEST);
-        }
-
         user.setEmail(userTest.getEmail());
-        if (userTest.getFirstName().length()==0){
-            return  new ResponseEntity<>(new ErrorModel("UserName is empty"),HttpStatus.BAD_REQUEST); }
         user.setFirstName(userTest.getFirstName());
-        if (userTest.getLastName().length()==0){
-            return  new ResponseEntity<>(new ErrorModel("LastName is empty"),HttpStatus.BAD_REQUEST); }
         user.setLastName(userTest.getLastName());
         user.setGender(userTest.getGender());
         user.setAdress(userTest.getAdress());
-
-
-
-        if (userTest.getPassWord().length()<5){
-            return  new ResponseEntity<>(new ErrorModel("Short PassWord"),HttpStatus.BAD_REQUEST); }
         String password = passwordEncoder().encode(userTest.getPassWord());
         user.setPassWord(password);
         user.setRole(userTest.getRole());
         user.setTelephone(userTest.getTelephone());
-
         user.setUserName(userTest.getUserName());
+        user.setEnabled(true);
+
 
         userRepository.save(user);
         return new ResponseEntity<>(user,HttpStatus.OK);
@@ -106,8 +93,20 @@ public class UserService {
             user.setRole(signUpForm.getRole());
             String password = passwordEncoder().encode(signUpForm.getPassWord());
             user.setPassWord(password);
-
+            user.setEnabled(false);
             userRepository.save(user);
+             ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+            confirmationTokenRepository.save(confirmationToken);
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getUserName());
+            mailMessage.setSubject("Complete Registration!");
+            mailMessage.setFrom("taymabenhmida1@gmailcom");
+            mailMessage.setText("To confirm your account, please click here : "
+                    + "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken());
+
+            emailService.sendEmail(mailMessage);
         }
 
 
@@ -175,41 +174,22 @@ public class UserService {
         User1 user=userRepository.findByEmail(email).get();
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
-    public ResponseEntity<?> updateUser(int id, User1 updatedUser) {
-        Optional<User1> UserOptional = userRepository.findById(id);
-        if(!UserOptional.isPresent())
-            return new ResponseEntity<>(new ErrorModel("wrong user id "),HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> updateUser(String userName, User1 updatedUser) {
+        Optional<User1> UserOptional = userRepository.findOneByUserName(userName);
 
         User1 databaseUser = UserOptional.get();
 
-        if(updatedUser.getFirstName() != null)
-            if (updatedUser.getFirstName().length() < 3)
-                return new ResponseEntity<>(new ErrorModel("wrong user name"),HttpStatus.BAD_REQUEST);
-            else
+
                 databaseUser.setFirstName(updatedUser.getFirstName());
-
-        if(updatedUser.getLastName() != null)
-            if (updatedUser.getLastName().length() < 3)
-                return new ResponseEntity<>(new ErrorModel("Invalid LastName"),HttpStatus.BAD_REQUEST);
-            else
-                databaseUser.setLastName(updatedUser.getLastName());
-
-        if (updatedUser.getPassWord().length()<5){
-            return  new ResponseEntity<>(new ErrorModel("Short PassWord"),HttpStatus.BAD_REQUEST); }
+        databaseUser.setGender(updatedUser.getGender());
+        databaseUser.setAdress(updatedUser.getAdress());
+        databaseUser.setTelephone(updatedUser.getTelephone());
+        databaseUser.setLastName(updatedUser.getLastName());
         String password = passwordEncoder().encode(updatedUser.getPassWord());
         databaseUser.setPassWord(password);
-
-
-        if (userRepository.findByEmail(updatedUser.getEmail()).isPresent()){
-            return  new ResponseEntity<>(new ErrorModel(" Email is  used"),HttpStatus.BAD_REQUEST); }
-
-        if(!isValidEmailAddress(updatedUser.getEmail())){
-            return  new ResponseEntity<>(new ErrorModel("Invalid email"),HttpStatus.BAD_REQUEST);
-        }
         databaseUser.setEmail(updatedUser.getEmail());
-
-
-
+        databaseUser.setUserName(updatedUser.getUserName());
+        databaseUser.setRole(updatedUser.getRole());
         userRepository.save(databaseUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -217,6 +197,14 @@ public class UserService {
         return  userRepository.findAll();
 
     }
+    public void deleteUser(String userName) {
+        userRepository.deleteUserByUserName(userName);
 
+    }
+    public User1 updateUser1(User1 user) {
+        String password = passwordEncoder().encode(user.getPassWord());
+        user.setPassWord(password);
+        return userRepository.save(user);
+    }
 
 }
