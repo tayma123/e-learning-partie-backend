@@ -2,33 +2,35 @@ package com.example.demo.Controller;
 
 import com.example.demo.Service.*;
 import com.example.demo.model.*;
+import com.example.demo.model.Answer;
+import com.example.demo.model.Options;
+import com.example.demo.model.Question;
+import com.example.demo.model.Quiz;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-@Controller
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("cours/chapitre/quiz/question/answer")
 public class AnswerController {
-    /*
-    private final QuizService quizService;
-    private final QuestionService questionService;
-    private final AnswerService answerService;
-    private final UserServiceImpl userService;
-    private final OptionsService optionsService;
 
-    public AnswerController(QuizService quizService, QuestionService questionService, AnswerService answerService, UserServiceImpl userService) {
+    private QuizService quizService;
+    private QuestionService questionService;
+    private AnswerService answerService;
+    private UserServiceImpl userService;
+    private OptionsService optionsService;
+
+    public AnswerController(QuizService quizService, QuestionService questionService, AnswerService answerService, UserServiceImpl userService, OptionsService optionsService) {
         this.quizService = quizService;
         this.questionService = questionService;
         this.answerService = answerService;
         this.userService = userService;
+        this.optionsService = optionsService;
     }
     @GetMapping("/findByQuestionAndUser/{idQs}/{username}")
-    public ResponseEntity<Answer> getAnswerByQuestionAndUser(@PathVariable("idQs") Long idQs,@PathVariable("username") String username) {
+    public ResponseEntity<Answer> getAnswerByQuestionAndUser(@PathVariable("idQs") Long idQs, @PathVariable("username") String username) {
         Question question=questionService.findById(idQs);
         User user=userService.findByUsername(username);
         Answer answer = answerService.findByQuestionAndUser(question,user);
@@ -51,14 +53,5 @@ public class AnswerController {
         Answer newAnswer = answerService.save(answer);
         return new ResponseEntity<>(newAnswer, HttpStatus.CREATED);
     }
-    @GetMapping("/submitResults")
-    public ResponseEntity<>
-    List<Question> questions = questionService.findByQuiz(quiz);
-     for (Question q : questions)
 
-    {
-        Options CorrectOption=q.getCorrectOption();
-        Options answer=q.
-    }
-*/
 }

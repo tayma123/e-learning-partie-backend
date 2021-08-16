@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+
 @Entity
 public class Quiz implements Serializable {
     @Id
@@ -11,19 +12,36 @@ public class Quiz implements Serializable {
     private Long idQ;
     private String intutilé;
     private  String description;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="idCr")
-    private  Cours cours;
+    private boolean isPassedByUser;
+    private int score;
+    @OneToMany(mappedBy = "quiz", fetch = FetchType.LAZY)
+    private List<Question> questions;
+    @Column(name = "idChap")
+    private Long idChap;
+    @OneToOne
+    @JoinColumn(name="idChap", insertable = false, updatable = false)
+    private Chapitre chapitre;
 
-    @OneToMany(mappedBy = "quiz")
-    private List<Question> questionList;
+    @ManyToOne (cascade = CascadeType.ALL)
+    @JoinColumn(name="username")
+    private User user;
+
     public Quiz() {
     }
 
-    public Quiz(Long idQ, String intutilé, String description) {
+    public Quiz( String intutilé, String description) {
+
+        this.intutilé = intutilé;
+        this.description = description;
+    }
+
+    public Quiz(Long idQ, String intutilé, String description, boolean isPassedByUser, int score, List<Question> questions) {
         this.idQ = idQ;
         this.intutilé = intutilé;
         this.description = description;
+        this.isPassedByUser = isPassedByUser;
+        this.score = score;
+        this.questions = questions;
     }
 
     public Long getIdQ() {
@@ -50,19 +68,51 @@ public class Quiz implements Serializable {
         this.description = description;
     }
 
-    public Cours getCours() {
-        return cours;
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    public void setCours(Cours cours) {
-        this.cours = cours;
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
-    public List<Question> getQuestionList() {
-        return questionList;
+    public boolean isPassedByUser() {
+        return isPassedByUser;
     }
 
-    public void setQuestionList(List<Question> questionList) {
-        this.questionList = questionList;
+    public void setPassedByUser(boolean passedByUser) {
+        isPassedByUser = passedByUser;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void addQuestion(Question question) {
+        if (questions.contains(question))
+            return;
+
+        questions.add(question);
+    }
+
+
+    public Long getIdChap() {
+        return idChap;
+    }
+
+    public void setIdChap(Long idChap) {
+        this.idChap = idChap;
     }
 }

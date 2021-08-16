@@ -14,15 +14,15 @@ import javax.transaction.Transactional;
 @Service("OptionsService")
 @Transactional
 public class OptionsService {
-    /*
+
     private OptionsRepo optionsRepo;
     @Autowired
     public OptionsService(OptionsRepo optionsRepo) {
         this.optionsRepo = optionsRepo;
     }
 
-    public static List<Options> getAllTrueOptions() {
-    }
+  /*  public static List<Options> getAllTrueOptions() {
+    }*/
 
     public Options findById(Long idOpt) {
         return  optionsRepo.findById(idOpt).orElseThrow(() -> new QuestionNotFoundException("Options Not Found!!"));
@@ -41,5 +41,5 @@ public class OptionsService {
     }
     public Options update(Options options) {
         return optionsRepo.save(options);
-    }*/
+    }
 }

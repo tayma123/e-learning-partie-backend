@@ -1,18 +1,19 @@
+
 package com.example.demo.Controller;
 
 import com.example.demo.Service.OptionsService;
 import com.example.demo.Service.QuestionService;
-import com.example.demo.Service.QuizService;
 import com.example.demo.model.Options;
 import com.example.demo.model.Question;
-import com.example.demo.model.Quiz;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-public class OptionsController {/*
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("cours/chapitre/quiz/question/options")
+public class OptionsController {
     private final OptionsService optionsService;
     private final QuestionService questionService;
 
@@ -30,7 +31,7 @@ public class OptionsController {/*
     @GetMapping("/findByQuestion/{idQs}")
     public ResponseEntity<List<Options>> getOptionsByQuestion(@PathVariable("idQs") Long idQs) {
         Question question=questionService.findById(idQs);
-        List<Options> optionsList = optionsService.findByQuestion(question);
+        List<Options> optionsList = question.getOptionsList();
         return new ResponseEntity<>(optionsList, HttpStatus.OK);
     }
 
@@ -49,10 +50,11 @@ public class OptionsController {/*
     }
 
     @PostMapping("/add/{idQs}")
-    public ResponseEntity<Options> addOptions(@RequestBody Options options , @PathVariable("idQs") Long idQs) {
+    public ResponseEntity<Options> addOptions(@RequestBody Options option , @PathVariable("idQs") Long idQs) {
         Question question=questionService.findById(idQs);
-        options.setQuestion(question);
-        Options newOptions = optionsService.save(options);
+        question.addOption(option);
+        option.setIdQs(idQs);
+        Options newOptions = optionsService.save(option);
         return new ResponseEntity<>(newOptions, HttpStatus.CREATED);
     }
 
@@ -61,5 +63,5 @@ public class OptionsController {/*
     public ResponseEntity<Options> updateOptions(@RequestBody Options options) {
         Options UpdateOptions= optionsService.update(options);
         return new ResponseEntity<>(UpdateOptions, HttpStatus.OK);
-    }*/
+    }
 }

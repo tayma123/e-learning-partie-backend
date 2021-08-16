@@ -1,11 +1,13 @@
 package com.example.demo.Controller;
-
+/*
 import com.example.demo.Repo.UserRepo;
 import com.example.demo.Service.ExportService;
 import com.example.demo.Service.UserServiceImpl;
+
 import com.example.demo.mail.ConfirmationToken;
 import com.example.demo.mail.ConfirmationTokenRepository;
 import com.example.demo.mail.EmailService;
+import com.example.demo.model.Cours.Cours;
 import com.example.demo.model.User;
 import com.example.demo.model.UserPDFExporter;
 import com.itextpdf.text.DocumentException;
@@ -35,6 +37,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 @RequestMapping("/")
 public class UserController {
+    /*
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
 
@@ -106,9 +109,10 @@ public class UserController {
         }
 
         return modelAndView;
-    }
+    }*/
     /* @Autowired
      PasswordEncoder passwordEncoder;*/
+/*
     @Autowired
     UserServiceImpl userService;
     @Autowired
@@ -121,8 +125,9 @@ public class UserController {
         return userRepo.save(u);
     }
     @GetMapping("/all")
-    public List<User> findAll()
-    {return userRepo.findAll();
+    public ResponseEntity<List<User>> getAllusers(){
+        List<User> users=userService.listAll();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 
@@ -137,7 +142,7 @@ public class UserController {
         HttpHeaders headers=new HttpHeaders();
         headers.add("content-Disposition","inline;filename=certificate.pdf");
         return  ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
-    }*/
+    }
     @CrossOrigin(origins = "*")
     @DeleteMapping("/delete/{username}")
     public ResponseEntity<?> deleteUser(@PathVariable("username") String username){
@@ -156,5 +161,7 @@ public class UserController {
         List<User> listUsers = userService.listAll();
         UserPDFExporter exporter = new UserPDFExporter(listUsers);
         exporter.export(response);
-    }*/
+    }
 }
+
+ */

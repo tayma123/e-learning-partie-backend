@@ -23,10 +23,10 @@ public class User implements Serializable {
     private Role role;
     @ManyToMany
     @JoinTable(
-            name = "course_like",
-            joinColumns = @JoinColumn(name = "apprenant_id"),
+            name = "user_courses",
+            joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "cours_id"))
-    Set<Cours> likedCourses;
+    Set<Cours> UserCourses;
     public User() {
     }
 
@@ -118,6 +118,20 @@ public class User implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Set<Cours> getUserCourses() {
+        return UserCourses;
+    }
+
+    public void setUserCourses(Set<Cours> userCourses) {
+        UserCourses = userCourses;
+    }
+    public void addCours(Cours cours) {
+        if (UserCourses.contains(cours))
+            return;
+
+        UserCourses.add(cours);
     }
 }
 

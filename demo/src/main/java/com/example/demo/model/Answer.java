@@ -8,25 +8,27 @@ public class Answer implements Serializable {
     @Id
     @GeneratedValue
     private Long idAnswer;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="idQs")
-    private  Question question;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="idQ")
-    private  Quiz quiz;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @Column(name = "idQs")
+    private Long idQs;
+    @ManyToOne
+    @JoinColumn(name="idQs", insertable = false, updatable = false)
+    private Question question;
+    @ManyToOne
+    @JoinColumn(name="idQ", insertable = false, updatable = false)
+    private Quiz quiz;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userId", nullable = false)
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "offeredAnswerId")
+    @ManyToOne
+    @JoinColumn(name = "idOpt", insertable = false, updatable = false)
     private Options option;
     public Answer() {
     }
 
-    public Answer(Long idAnswer, Question question, User user, Options option) {
+    public Answer(Long idAnswer, Question question, Quiz quiz,User user, Options option) {
         this.idAnswer = idAnswer;
         this.question = question;
-        this.quiz = question.getQuiz();
+        this.quiz = quiz;
         this.user = user;
         this.option = option;
     }
@@ -69,10 +71,10 @@ public class Answer implements Serializable {
     }
 
     public Quiz getQuiz() {
-        return question.getQuiz();
+        return quiz;
     }
 
     public void setQuiz() {
-        this.quiz = this.question.getQuiz();
+        this.quiz = quiz;
     }
 }

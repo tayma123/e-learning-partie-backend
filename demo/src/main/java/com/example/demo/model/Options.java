@@ -9,15 +9,13 @@ public class Options {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idOpt;
     private  String opt;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="idQs")
-    private Question question;
-
     @Column(name = "is_correct", columnDefinition = "boolean default false")
     private Boolean isCorrect;
-    @Column(name = "option")
-    private Character option;
-
+    @Column(name = "idQs")
+    private Long idQs;
+    @ManyToOne
+    @JoinColumn(name = "idQs", insertable = false, updatable = false)
+    private Question question;
     public Long getIdOpt() {
         return idOpt;
     }
@@ -34,13 +32,6 @@ public class Options {
         this.opt = opt;
     }
 
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
 
     public Boolean getCorrect() {
         return isCorrect;
@@ -50,12 +41,12 @@ public class Options {
         isCorrect = correct;
     }
 
-    public Character getOption() {
-        return option;
+    public Long getIdQs() {
+        return idQs;
     }
 
-    public void setOption(Character option) {
-        this.option = option;
+    public void setIdQs(Long idQs) {
+        this.idQs = idQs;
     }
 }
 

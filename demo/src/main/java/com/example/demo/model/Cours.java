@@ -12,16 +12,20 @@ public class Cours implements Serializable {
     private Long idCr;
     private String titre;
     private String description;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="id_catégorie")
-    private  Catégorie catégorie;
+    @OneToMany(mappedBy = "cours", fetch = FetchType.LAZY)
+    private List<Chapitre> chapitres;
 
-    @OneToMany(mappedBy = "cours")
-    private List<Quiz> quizList;
-    @OneToMany(mappedBy = "cours")
-    private List<Certificat> certificatlist;
-    @ManyToMany(mappedBy = "likedCourses")
-    Set<User> likes;
+    @Column(name = "idCt")
+    private Long idCt;
+    @ManyToOne
+    @JoinColumn(name="idCt", insertable = false, updatable = false)
+    private Catégorie catégorie;
+
+    @Column(name = "username")
+    private String username;
+
+
+
 
     public Long getIdCr() {
         return idCr;
@@ -47,35 +51,45 @@ public class Cours implements Serializable {
         this.description = description;
     }
 
-    public Catégorie getCatégorie() {
-        return catégorie;
+    public Long getIdCt() {
+        return idCt;
     }
 
-    public void setCatégorie(Catégorie catégorie) {
-        this.catégorie = catégorie;
+    public Cours(Long idCr, String titre, String description, List<Chapitre> chapitres) {
+        this.idCr = idCr;
+        this.titre = titre;
+        this.description = description;
+        this.chapitres = chapitres;
     }
-    public void addQuiz(Quiz quiz) {
-        if (quizList.contains(quiz))
-            return;
 
-        quizList.add(quiz);
+    public void setIdCt(Long idCt) {
+        this.idCt = idCt;
+    }
 
-        quiz.setCours(this);
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Cours() {
     }
 
-    public Cours(Long idCr, String titre, String description, Catégorie catégorie) {
-        this.idCr = idCr;
-        this.titre = titre;
-        this.description = description;
-        this.catégorie = catégorie;
+
+    public List<Chapitre> getChapitres() {
+        return chapitres;
     }
 
-    public Cours(Long idCr, String titre, String description) {
-        this.idCr = idCr;
-        this.titre = titre;
-        this.description = description;
+    public void setChapitres(List<Chapitre> chapitres) {
+        this.chapitres = chapitres;
+    }
+
+    public void addChapitre(Chapitre chapitre) {
+        if (chapitres.contains(chapitre))
+            return;
+
+        chapitres.add(chapitre);
     }
 }

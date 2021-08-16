@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserServiice {
           super();
           this.userRepo=userRepo;
       }
+
       //Registration
     @Override
     public User save(UserRegistrationDto registrationDto) {
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserServiice {
 
        return userRepo.save(user);
     }
-    //Find alla user by username
+    //Find all
     public List<User> listAll() {
         return userRepo.findAll(Sort.by("username").ascending());
     }
@@ -34,5 +35,8 @@ public class UserServiceImpl implements UserServiice {
     public void deleteUser(String username) {
         userRepo.deleteUserByUsername(username);
 
+    }
+    public User findByUsername (String username){
+      return userRepo.findByUsername(username);
     }
 }

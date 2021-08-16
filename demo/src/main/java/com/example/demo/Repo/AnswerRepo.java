@@ -8,7 +8,7 @@ import com.example.demo.model.Quiz;
 import java.util.List;
 
 public interface AnswerRepo extends JpaRepository<Answer,Long> {
-    Answer findByQuestionAndUser (Question question, User user);
+   Answer findByQuestionAndUser (Question question, User user);
 
     List<Answer> findAllByUserAndQuiz(Quiz quiz, User user);
 }

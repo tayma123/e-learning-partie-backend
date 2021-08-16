@@ -1,5 +1,5 @@
 package com.example.demo.Controller;
-
+/*
 import com.example.demo.Service.UserServiice;
 import com.example.demo.model.UserRegistrationDto;
 import org.springframework.ui.Model;
@@ -36,3 +36,4 @@ public class UserRegistrationController {
 
     }
 }
+*/

@@ -5,7 +5,7 @@ import com.example.demo.model.User;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
-
+/*
 @Entity
 @Table(name="confirmationToken")
 public class ConfirmationToken {
@@ -66,5 +66,5 @@ public class ConfirmationToken {
         this.user = user;
     }
 }
-
+*/
 

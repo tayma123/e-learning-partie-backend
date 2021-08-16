@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -7,8 +8,6 @@ public class Certificat {
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="idCr")
     private  Cours cours;
     private String intitulé;
 

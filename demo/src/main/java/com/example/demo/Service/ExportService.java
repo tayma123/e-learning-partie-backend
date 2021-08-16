@@ -2,18 +2,11 @@ package com.example.demo.Service;
 
 
 import com.example.demo.Repo.CertificatRepo;
-import com.example.demo.model.Certificat;
-import com.example.demo.model.User;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.pdf.PdfCell;
-import com.lowagie.text.pdf.PdfTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import java.io.ByteArrayInputStream;

@@ -4,10 +4,9 @@ import com.example.demo.Exception.CoursNotFoundException;
 
 import com.example.demo.Repo.CoursRepo;
 import com.example.demo.model.Cours;
-import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Set;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -51,6 +50,9 @@ public void deleteCours(String name) {
 
     public Cours findCoursByTitre(String titre) {
         return coursRepo.findCoursByTitre(titre).orElseThrow(() -> new CoursNotFoundException("user not found"));
+    }
+
+    public Set <Cours> findByCatégorie(Long idCt) {   return coursRepo.findByCatégorie(idCt);
     }
 }
 

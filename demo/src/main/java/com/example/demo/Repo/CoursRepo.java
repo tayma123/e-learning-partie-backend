@@ -2,12 +2,13 @@ package com.example.demo.Repo;
 
 
 import com.example.demo.model.Cours;
-import com.example.demo.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface CoursRepo extends JpaRepository<Cours,Long> {
 
@@ -23,4 +24,5 @@ public interface CoursRepo extends JpaRepository<Cours,Long> {
 
 
     Optional<Cours> findCoursByTitre(String titre);
-}
+
+    Set<Cours> findByCatégorie(Long idCt);}

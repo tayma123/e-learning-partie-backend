@@ -3,7 +3,6 @@ package com.example.demo.Service;
 
 import com.example.demo.Exception.QuizNotFoundException;
 import com.example.demo.Repo.QuizRepo;
-import com.example.demo.model.Cours;
 import com.example.demo.model.Quiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +27,9 @@ public class QuizService {
         return quizRepo.findAll();
     }
 
-    public List<Quiz> findByCours(Cours cours) {
-        return quizRepo.findByCours(cours);
+
+   public Quiz findByChapitre(Long idChap){
+        return quizRepo.findByChapitre(idChap);
     }
 
     public Quiz save(Quiz quiz) {
