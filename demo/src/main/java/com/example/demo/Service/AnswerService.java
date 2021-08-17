@@ -1,5 +1,5 @@
 package com.example.demo.Service;
-
+/*
 import com.example.demo.Exception.QuestionNotFoundException;
 import com.example.demo.Repo.AnswerRepo;
 import com.example.demo.model.Answer;
@@ -40,4 +40,4 @@ public class AnswerService {
         return answerRepo.findAllByUserAndQuiz(quiz,user);
     }
 
-}
+}*/

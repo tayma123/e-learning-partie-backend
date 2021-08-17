@@ -3,7 +3,7 @@ package com.example.demo.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 public class Cours implements Serializable {
@@ -20,7 +20,8 @@ public class Cours implements Serializable {
     @ManyToOne
     @JoinColumn(name="idCt", insertable = false, updatable = false)
     private Catégorie catégorie;
-
+    @OneToMany(mappedBy = "cours", fetch = FetchType.LAZY)
+    private List<ApprenantCourses> inscriptions;
     @Column(name = "username")
     private String username;
 
@@ -92,4 +93,19 @@ public class Cours implements Serializable {
 
         chapitres.add(chapitre);
     }
+
+    public List<ApprenantCourses> getInscriptions() {
+        return inscriptions;
+    }
+
+    public void setInscriptions(List<ApprenantCourses> inscriptions) {
+        this.inscriptions = inscriptions;
+    }
+    public void addInscription(ApprenantCourses apprenantCourse) {
+        if (inscriptions.contains(apprenantCourse))
+            return;
+
+        inscriptions.add(apprenantCourse);
+    }
+
 }

@@ -1,5 +1,5 @@
 package com.example.demo.Repo;
-
+/*
 import com.example.demo.model.Answer;
 import com.example.demo.model.Question;
 import com.example.demo.model.User;
@@ -12,3 +12,4 @@ public interface AnswerRepo extends JpaRepository<Answer,Long> {
 
     List<Answer> findAllByUserAndQuiz(Quiz quiz, User user);
 }
+*/

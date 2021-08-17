@@ -22,9 +22,7 @@ public class Quiz implements Serializable {
     @JoinColumn(name="idChap", insertable = false, updatable = false)
     private Chapitre chapitre;
 
-    @ManyToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name="username")
-    private User user;
+
 
     public Quiz() {
     }
@@ -82,14 +80,6 @@ public class Quiz implements Serializable {
 
     public void setPassedByUser(boolean passedByUser) {
         isPassedByUser = passedByUser;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public int getScore() {
