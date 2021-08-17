@@ -1,7 +1,11 @@
 package com.example.demo.tayma.Services;
 
 
+<<<<<<< HEAD:demo/src/main/java/com/example/demo/tayma/Services/ExportService.java
 import com.example.demo.tayma.Repository.CertificatRepo;
+=======
+import com.example.demo.Repo.CertificatRepo;
+>>>>>>> e944f10b738061c10593560335e716ad80a8456c:demo/src/main/java/com/example/demo/Service/ExportService.java
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;

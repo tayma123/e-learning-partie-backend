@@ -7,6 +7,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.stream.Stream;
 @Service
 public class SupportDeCoursService {
@@ -23,9 +24,10 @@ public class SupportDeCoursService {
 
         return supportDeCoursRepo.save(FileDB);
     }
+    public Optional<SupportDeCours> findSupportById (String idSQ){return supportDeCoursRepo.findById(idSQ);}
 
-    public SupportDeCours getFile(String id) {
-        return supportDeCoursRepo.findById(id).get();
+    public SupportDeCours getFile(String idSQ) {
+        return supportDeCoursRepo.findById(idSQ).get();
     }
 
     public Stream<SupportDeCours> getAllFiles() {

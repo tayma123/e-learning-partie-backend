@@ -18,9 +18,8 @@ public class UserTest {
     private String userName;
     private String passWord;
     private String adress;
-    private Boolean isEnabled;
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private com.example.demo.tayma.Entities.Role role;
 
     public String getFirstName() {
         return firstName;
@@ -94,14 +93,6 @@ public class UserTest {
         this.role = role;
     }
 
-    public Boolean getEnabled() {
-        return isEnabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        isEnabled = enabled;
-    }
-
     public UserTest() {
     }
 
@@ -116,18 +107,4 @@ public class UserTest {
         this.adress = adress;
         this.role = role;
     }
-
-    public UserTest(String firstName, String lastName, String email, String telephone, String gender, String userName, String passWord, String adress, Boolean isEnabled, Role role) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.telephone = telephone;
-        this.gender = gender;
-        this.userName = userName;
-        this.passWord = passWord;
-        this.adress = adress;
-        this.isEnabled = isEnabled;
-        this.role = role;
-    }
-
 }

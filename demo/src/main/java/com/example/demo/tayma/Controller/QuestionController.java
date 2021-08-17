@@ -7,12 +7,11 @@ import com.example.demo.tayma.Entities.Quiz;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/question")
+@RequestMapping("/cours/chapitre/quiz/question")
 public class QuestionController {
     private final QuestionService questionService;
     private final QuizService quizService;
@@ -30,7 +29,7 @@ public class QuestionController {
     @GetMapping("/findByQuiz/{idQ}")
     public ResponseEntity<List<Question>> getQuestionsByQuiz(@PathVariable("idQ") Long idQ) {
         Quiz quiz=quizService.findById(idQ);
-        List<Question> questions = questionService.findByQuiz(quiz);
+        List<Question> questions = quiz.getQuestions();
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
@@ -51,7 +50,8 @@ public class QuestionController {
     @PostMapping("/add/{idQ}")
     public ResponseEntity<Question> addQuestion(@RequestBody Question question , @PathVariable("idQ") Long idQ) {
         Quiz quiz=quizService.findById(idQ);
-        question.setQuiz(quiz);
+        quiz.addQuestion(question);
+        question.setIdQ(idQ);
         Question newQuestion = questionService.save(question);
         return new ResponseEntity<>(newQuestion, HttpStatus.CREATED);
     }

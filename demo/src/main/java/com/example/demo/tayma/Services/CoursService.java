@@ -2,11 +2,16 @@ package com.example.demo.tayma.Services;
 
 import com.example.demo.tayma.Exception.CoursNotFoundException;
 
+<<<<<<< HEAD:demo/src/main/java/com/example/demo/tayma/Services/CoursService.java
 import com.example.demo.tayma.Repository.CoursRepo;
 import com.example.demo.tayma.Entities.Cours;
+=======
+import com.example.demo.Repo.CoursRepo;
+import com.example.demo.model.Cours;
+>>>>>>> e944f10b738061c10593560335e716ad80a8456c:demo/src/main/java/com/example/demo/Service/CoursService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Set;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -50,6 +55,9 @@ public void deleteCours(String name) {
 
     public Cours findCoursByTitre(String titre) {
         return coursRepo.findCoursByTitre(titre).orElseThrow(() -> new CoursNotFoundException("user not found"));
+    }
+
+    public Set <Cours> findByCatégorie(Long idCt) {   return coursRepo.findByCatégorie(idCt);
     }
 }
 

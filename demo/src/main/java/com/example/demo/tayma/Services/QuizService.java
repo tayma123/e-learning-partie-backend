@@ -1,10 +1,16 @@
 package com.example.demo.tayma.Services;
 
 
+<<<<<<< HEAD:demo/src/main/java/com/example/demo/tayma/Services/QuizService.java
 import com.example.demo.tayma.Exception.QuizNotFoundException;
 import com.example.demo.tayma.Repository.QuizRepo;
 import com.example.demo.tayma.Entities.Cours;
 import com.example.demo.tayma.Entities.Quiz;
+=======
+import com.example.demo.Exception.QuizNotFoundException;
+import com.example.demo.Repo.QuizRepo;
+import com.example.demo.model.Quiz;
+>>>>>>> e944f10b738061c10593560335e716ad80a8456c:demo/src/main/java/com/example/demo/Service/QuizService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +34,9 @@ public class QuizService {
         return quizRepo.findAll();
     }
 
-    public List<Quiz> findByCours(Cours cours) {
-        return quizRepo.findByCours(cours);
+
+   public Quiz findByChapitre(Long idChap){
+        return quizRepo.findByChapitre(idChap);
     }
 
     public Quiz save(Quiz quiz) {

@@ -1,9 +1,17 @@
 package com.example.demo.tayma.Controller;
 
+<<<<<<< HEAD:demo/src/main/java/com/example/demo/tayma/Controller/QuizController.java
 import com.example.demo.tayma.Services.CoursService;
 import com.example.demo.tayma.Services.QuizService;
 import com.example.demo.tayma.Entities.Cours;
 import com.example.demo.tayma.Entities.Quiz;
+=======
+import com.example.demo.Service.*;
+import com.example.demo.model.*;
+import com.example.demo.model.Chapitre;
+
+import com.example.demo.model.Quiz;
+>>>>>>> e944f10b738061c10593560335e716ad80a8456c:demo/src/main/java/com/example/demo/Controller/QuizController.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,30 +21,38 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/quiz")
+@RequestMapping("/cours/chapitre/quiz")
 public class QuizController {
     private final QuizService quizService;
-    private final CoursService coursService;
-@Autowired
-    public QuizController(QuizService quizService, CoursService coursService) {
+  /*  private final QuestionService questionService;
+    private final AnswerService answerService;*/
+    private final UserServiceImpl userService;
+    private final ChapitreService chapitreService;
+    @Autowired
+    public QuizController(QuizService quizService, UserServiceImpl userService, ChapitreService chapitreService) {
         this.quizService = quizService;
-        this.coursService = coursService;
+        /*this.questionService = questionService;
+        this.answerService = answerService;*/
+        this.userService = userService;
+        this.chapitreService = chapitreService;
+
     }
     @GetMapping("/all")
     public ResponseEntity<List<Quiz>> getQuizs() {
         List<Quiz> quizes = quizService.findAll();
         return new ResponseEntity<>(quizes, HttpStatus.OK);
     }
-    @GetMapping("/findByCours/{idCr}")
-    public ResponseEntity<List<Quiz>> getQuizesByCours(@PathVariable("idCr") Long idCr) {
-        Cours cours=coursService.findCoursById(idCr);
-        List<Quiz> quizes = quizService.findByCours(cours);
-        return new ResponseEntity<>(quizes, HttpStatus.OK);
+
+
+
+    @GetMapping("/findByChapitre/{idChap}")
+    public ResponseEntity<Quiz> getQuizByChapitre(@PathVariable("idChap") Long idChap) {
+        Chapitre chapitre = chapitreService.findChapitreByIdChap(idChap);
+        Quiz quiz= chapitre.getQuiz();
+        return new ResponseEntity<>(quiz, HttpStatus.OK);
     }
-
     @GetMapping("/find/{idQ}")
-    public ResponseEntity<Quiz> getquiz(@PathVariable("idQ") Long idQ) {
-
+    public ResponseEntity<Quiz> getQuiz(@PathVariable("idQ") Long idQ) {
         Quiz quiz = quizService.findById(idQ);
         return new ResponseEntity<>(quiz, HttpStatus.OK);
     }
@@ -48,11 +64,12 @@ public class QuizController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/add/{idQ}")
-    public ResponseEntity<Quiz> addQuiz(@RequestBody Quiz quiz , @PathVariable("idQ") Long idQ) {
-        Cours cours=coursService.findCoursById(idQ);
-        quiz.setCours(cours);
+    @PostMapping("/add/{idChap}")
+    public ResponseEntity<Quiz> addQuiz(@RequestBody Quiz quiz , @PathVariable("idChap") Long idChap) {
+        Chapitre chapitre = chapitreService.findChapitreByIdChap(idChap);
+        quiz.setIdChap(idChap);
         Quiz newQuiz = quizService.save(quiz);
+        chapitre.setQuiz(newQuiz);
         return new ResponseEntity<>(newQuiz, HttpStatus.CREATED);
     }
 
@@ -62,4 +79,32 @@ public class QuizController {
         Quiz UpdateQuiz = quizService.update(quiz);
         return new ResponseEntity<>(UpdateQuiz, HttpStatus.OK);
     }
+/*
+  @PostMapping("/submit/{username}")
+    public ResponseEntity<String> ValidateQuizByUSer(@RequestBody Quiz quiz,@PathVariable("username") String username) {
+        List<Question> questions = quiz.getQuestionList();
+        int size = questions.size();
+        User user = userService.findByUsername(username);
+        int score=0;
+        int score_faux=0;
+        String Result="";
+        for (Question q:questions){
+            Options option =answerService.findByQuestionAndUser(q,user).getOption();
+            if (option.getCorrect()==true){
+                score+=1;
+            }
+            else
+                score_faux+=1;
+        }
+        quiz.setScore(score);
+        if (score/size*100>=50){
+            quiz.setPassedByUser(true);
+            Result="Congratulations! you're successfully completed this Quiz. You're ready for the next step!!";
+        }
+        else {
+            Result="Sorry! you should repeat the test and get more than 50% correct answer to pass to the next step";
+        }
+        return new ResponseEntity<>(Result, HttpStatus.CREATED);
+    }
+*/
 }

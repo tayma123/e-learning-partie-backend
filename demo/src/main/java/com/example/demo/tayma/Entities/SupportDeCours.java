@@ -11,12 +11,11 @@ public class SupportDeCours implements Serializable {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    private String idSQ;
 
     private String name;
 
     private String type;
-
 
 
     public SupportDeCours( String name, String type) {
@@ -29,13 +28,15 @@ public class SupportDeCours implements Serializable {
     public SupportDeCours() {
     }
 
-    public String getId() {
-        return id;
+    public String getIdSQ() {
+        return idSQ;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdSQ(String idSQ) {
+        this.idSQ = idSQ;
     }
+
+
 
     public String getName() {
         return name;
@@ -52,6 +53,5 @@ public class SupportDeCours implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-
 
 }

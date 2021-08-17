@@ -37,16 +37,16 @@ public class CatégorieController {
         return new ResponseEntity<>(newCatégorie, HttpStatus.CREATED);
     }
     //@Secured(value={"ROLE_AGENT"})
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Catégorie> updateCatégorie(@RequestBody Catégorie catégorie){
         Catégorie UpdateCatégorie= catégorieService.updateCatégorie(catégorie);
         return new ResponseEntity<>(UpdateCatégorie, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping("/delete/{NomC}")
-    public ResponseEntity<?> deleteCatégorie(@PathVariable("NomC") String NomC){
-        catégorieService.deleteCatégorie(NomC);
+    @DeleteMapping("/delete/{idCt}")
+    public ResponseEntity<?> deleteCatégorie(@PathVariable("idCt") Long idCt){
+        catégorieService.deleteCatégorie(idCt);
         return new ResponseEntity<>( HttpStatus.OK);
     }
 }

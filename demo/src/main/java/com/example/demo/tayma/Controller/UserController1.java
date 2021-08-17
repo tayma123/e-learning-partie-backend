@@ -12,7 +12,6 @@ import com.example.demo.tayma.Services.UserService;
 import com.example.demo.tayma.mail.ConfirmationToken;
 import com.example.demo.tayma.mail.ConfirmationTokenRepository;
 import com.example.demo.tayma.mail.EmailService;
-import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -69,9 +68,9 @@ public class UserController1 {
         return userService.deleteByUserName(userName);
     }
 
-    @PutMapping("/updateByUserName/{userName}")
-    public ResponseEntity<?> updateUser(@PathVariable String userName, @RequestBody User1 updatedUser) {
-        return userService.updateUser(userName, updatedUser);
+    @PutMapping("/updateById")
+    public ResponseEntity<?> updateUser(@RequestParam int id, @RequestBody User1 updatedUser) {
+        return userService.updateUser(id, updatedUser);
     }
 
     @GetMapping("/getByEmail")
@@ -79,8 +78,8 @@ public class UserController1 {
         return userService.getByEmail(email);
     }
 
-    @GetMapping("/getByUserName/{userName}")
-    public ResponseEntity<?> getByUserName(@PathVariable("userName") String userName) {
+    @GetMapping("/getByUserName")
+    public ResponseEntity<?> getByUserName(@RequestParam String userName) {
         return userService.getByUserName(userName);
     }
 
@@ -112,29 +111,6 @@ public class UserController1 {
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(bais));
 
     }
-    @CrossOrigin(origins = "*")
-    @DeleteMapping("/delete/{userName}")
-    public ResponseEntity<?> deleteUser(@PathVariable("userName") String userName){
-        userService.deleteUser(userName);
-        return new ResponseEntity<>( HttpStatus.OK);
-    }
-    @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
-        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-
-        if (token != null) {
-            User1 user = userRepository.findByUserNameIgnoreCase(token.getUser().getUserName());
-            user.setEnabled(true);
-            userRepository.save(user);
-            modelAndView.setViewName("accountVerified");
-        } else {
-            modelAndView.addObject("message", "The link is invalid or broken!");
-            modelAndView.setViewName("error");
-        }
-
-        return modelAndView;
-    }
-   
 /*
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView displayRegistration(ModelAndView modelAndView, User1 user) {
@@ -193,9 +169,4 @@ public class UserController1 {
         return modelAndView;
     }
 */
-@PostMapping("/update")
-public ResponseEntity<User1> updateUser(@RequestBody User1 user){
-    User1 UpdateUser= userService.updateUser1(user);
-    return new ResponseEntity<>(UpdateUser, HttpStatus.OK);
-}
 }

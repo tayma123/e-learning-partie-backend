@@ -13,16 +13,15 @@ public class SupportDeCoursController {
     private FileSystemStorageService storageService;
 
     @RequestMapping("/upload")
-    public String index()
-    {
+    public String index() {
         return "addVideo";
     }
 
 
     @PostMapping("/persistVideo")
-    public String  persistVideo(@RequestParam("videoFile") MultipartFile videoFile)
-    {
+    public String persistVideo(@RequestParam("videoFile") MultipartFile videoFile) {
         storageService.store(videoFile);
         return "addVideo";
     }
+
 }
