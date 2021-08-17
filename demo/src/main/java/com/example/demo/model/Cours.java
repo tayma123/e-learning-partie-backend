@@ -1,9 +1,13 @@
 package com.example.demo.model;
 
+import com.example.demo.model.ApprenantCourses;
+import com.example.demo.model.Catégorie;
+import com.example.demo.model.Chapitre;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 public class Cours implements Serializable {
@@ -14,15 +18,18 @@ public class Cours implements Serializable {
     private String description;
     @OneToMany(mappedBy = "cours", fetch = FetchType.LAZY)
     private List<Chapitre> chapitres;
-
     @Column(name = "idCt")
     private Long idCt;
     @ManyToOne
     @JoinColumn(name="idCt", insertable = false, updatable = false)
     private Catégorie catégorie;
-
+    @OneToMany(mappedBy = "cours", fetch = FetchType.LAZY)
+    private List<ApprenantCourses> inscriptions;
     @Column(name = "username")
     private String username;
+    @ManyToOne
+    @JoinColumn(name = "username", insertable = false, updatable = false)
+    private User user;
 
 
 
@@ -92,4 +99,19 @@ public class Cours implements Serializable {
 
         chapitres.add(chapitre);
     }
+
+    public List<ApprenantCourses> getInscriptions() {
+        return inscriptions;
+    }
+
+    public void setInscriptions(List<ApprenantCourses> inscriptions) {
+        this.inscriptions = inscriptions;
+    }
+    public void addInscription(ApprenantCourses apprenantCourse) {
+        if (inscriptions.contains(apprenantCourse))
+            return;
+
+        inscriptions.add(apprenantCourse);
+    }
+
 }

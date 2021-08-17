@@ -21,12 +21,16 @@ public class User implements Serializable {
     private boolean isEnabled;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @ManyToMany
-    @JoinTable(
-            name = "user_courses",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "cours_id"))
-    Set<Cours> UserCourses;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<ApprenantCourses> Inscriptions;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Cours> CoursEnseignant;
+    /*  @ManyToMany
+      @JoinTable(
+              name = "user_courses",
+              joinColumns = @JoinColumn(name = "user_id"),
+              inverseJoinColumns = @JoinColumn(name = "cours_id"))
+      Set<Cours> UserCourses;*/
     public User() {
     }
 
@@ -120,18 +124,34 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public Set<Cours> getUserCourses() {
-        return UserCourses;
+
+
+    public List<ApprenantCourses> getInscriptions() {
+        return Inscriptions;
     }
 
-    public void setUserCourses(Set<Cours> userCourses) {
-        UserCourses = userCourses;
+    public void setInscriptions(List<ApprenantCourses> inscriptions) {
+        Inscriptions = inscriptions;
     }
-    public void addCours(Cours cours) {
-        if (UserCourses.contains(cours))
+    public void addInscription(ApprenantCourses apprenantCourses) {
+        if (Inscriptions.contains(apprenantCourses))
             return;
 
-        UserCourses.add(cours);
+        Inscriptions.add(apprenantCourses);
+    }
+    public List<Cours> getCoursEnseignant() {
+        return CoursEnseignant;
+    }
+
+    public void setCoursEnseignant(List<Cours> coursEnseignant) {
+        CoursEnseignant = coursEnseignant;
+    }
+
+    public void addCours(Cours cours) {
+        if (CoursEnseignant.contains(cours))
+            return;
+
+        CoursEnseignant.add(cours);
     }
 }
 

@@ -41,9 +41,9 @@ public class CoursController {
         return new ResponseEntity<>(coursList, HttpStatus.OK);
     }
     @GetMapping("/findByUser/{username}")
-    public ResponseEntity <Set<Cours>> getCoursByUser(@PathVariable("username") String username){
+    public ResponseEntity <List<Cours>> getCoursByUser(@PathVariable("username") String username){
         User user=userService.findByUsername(username);
-        Set<Cours> coursList=user.getUserCourses();
+        List<Cours> coursList=user.getCoursEnseignant();
         return new ResponseEntity<>(coursList, HttpStatus.OK);
     }
 
@@ -51,6 +51,17 @@ public class CoursController {
 
     @PostMapping("/add")
     public ResponseEntity<Cours> addCours(@RequestBody Cours cours){
+        Cours newCours= coursService.addCours(cours);
+        return new ResponseEntity<>(newCours, HttpStatus.CREATED);
+    }
+    @PostMapping("/addByUser/{username}/{idCt}")
+    public ResponseEntity<Cours> addByUser(@RequestBody Cours cours,@PathVariable("username") String username,@PathVariable("idCt") Long idCt){
+        Catégorie catégorie=catégorieService.findCatégorieByIdCt(idCt);
+        User user=userService.findByUsername(username);
+        cours.setIdCt(idCt);
+        cours.setUsername(username);
+        catégorie.addCours(cours);
+        user.addCours(cours);
         Cours newCours= coursService.addCours(cours);
         return new ResponseEntity<>(newCours, HttpStatus.CREATED);
     }
