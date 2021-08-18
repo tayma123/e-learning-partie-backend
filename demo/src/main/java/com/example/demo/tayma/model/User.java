@@ -1,8 +1,9 @@
-package com.example.demo.tayma.model;
+package com.example.demo.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -20,16 +21,12 @@ public class User implements Serializable {
     private boolean isEnabled;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<ApprenantCourses> Inscriptions;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Cours> CoursEnseignant;
-    /*  @ManyToMany
-      @JoinTable(
-              name = "user_courses",
-              joinColumns = @JoinColumn(name = "user_id"),
-              inverseJoinColumns = @JoinColumn(name = "cours_id"))
-      Set<Cours> UserCourses;*/
+    @ManyToMany
+    @JoinTable(
+            name = "user_courses",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "cours_id"))
+    Set<Cours> UserCourses;
     public User() {
     }
 
@@ -123,34 +120,18 @@ public class User implements Serializable {
         this.role = role;
     }
 
-
-
-    public List<ApprenantCourses> getInscriptions() {
-        return Inscriptions;
+    public Set<Cours> getUserCourses() {
+        return UserCourses;
     }
 
-    public void setInscriptions(List<ApprenantCourses> inscriptions) {
-        Inscriptions = inscriptions;
+    public void setUserCourses(Set<Cours> userCourses) {
+        UserCourses = userCourses;
     }
-    public void addInscription(ApprenantCourses apprenantCourses) {
-        if (Inscriptions.contains(apprenantCourses))
-            return;
-
-        Inscriptions.add(apprenantCourses);
-    }
-    public List<Cours> getCoursEnseignant() {
-        return CoursEnseignant;
-    }
-
-    public void setCoursEnseignant(List<Cours> coursEnseignant) {
-        CoursEnseignant = coursEnseignant;
-    }
-
     public void addCours(Cours cours) {
-        if (CoursEnseignant.contains(cours))
+        if (UserCourses.contains(cours))
             return;
 
-        CoursEnseignant.add(cours);
+        UserCourses.add(cours);
     }
 }
 

@@ -1,11 +1,11 @@
-package com.example.demo.tayma.Controller;
-/*
-import com.example.demo.tayma.Service.*;
-import com.example.demo.tayma.model.*;
-import com.example.demo.tayma.model.Answer;
-import com.example.demo.tayma.model.Options;
-import com.example.demo.tayma.model.Question;
-import com.example.demo.tayma.model.Quiz;
+package com.example.demo.Controller;
+
+import com.example.demo.Service.*;
+import com.example.demo.model.*;
+import com.example.demo.model.Answer;
+import com.example.demo.model.Options;
+import com.example.demo.model.Question;
+import com.example.demo.model.Quiz;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,4 +55,3 @@ public class AnswerController {
     }
 
 }
-*/

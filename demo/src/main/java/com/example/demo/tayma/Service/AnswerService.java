@@ -1,11 +1,11 @@
-package com.example.demo.tayma.Service;
-/*
-import com.example.demo.tayma.Exception.QuestionNotFoundException;
-import com.example.demo.tayma.Repo.AnswerRepo;
-import com.example.demo.tayma.model.Answer;
-import com.example.demo.tayma.model.Question;
-import com.example.demo.tayma.model.Quiz;
-import com.example.demo.tayma.model.User;
+package com.example.demo.Service;
+
+import com.example.demo.Exception.QuestionNotFoundException;
+import com.example.demo.Repo.AnswerRepo;
+import com.example.demo.model.Answer;
+import com.example.demo.model.Question;
+import com.example.demo.model.Quiz;
+import com.example.demo.model.User;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -41,4 +41,3 @@ public class AnswerService {
     }
 
 }
-*/
