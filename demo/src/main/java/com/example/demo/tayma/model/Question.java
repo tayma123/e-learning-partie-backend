@@ -13,8 +13,6 @@ public class Question implements Serializable {
     private String question;
     @Column(name = "idQ")
     private Long idQ;
-    /* @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-     private List<Answer> answers;*/
     @ManyToOne
     @JoinColumn(name = "idQ", insertable = false, updatable = false)
     private Quiz quiz;
