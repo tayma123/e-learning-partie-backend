@@ -31,22 +31,27 @@ public class CatégorieController {
         Catégorie catégorie= catégorieService.findCatégorieByNomC(NomC);
         return new ResponseEntity<>(catégorie, HttpStatus.OK);
     }
+    @GetMapping("/findById/{idCt}")
+    public ResponseEntity<Catégorie> getCatégorieByNomc(@PathVariable("idCt") Long idCt){
+        Catégorie catégorie= catégorieService.findCatégorieByIdCt(idCt);
+        return new ResponseEntity<>(catégorie, HttpStatus.OK);
+    }
     @PostMapping("/add")
     public ResponseEntity<Catégorie> addCatégorie(@RequestBody Catégorie catégorie){
         Catégorie newCatégorie= catégorieService.addCatégorie(catégorie);
         return new ResponseEntity<>(newCatégorie, HttpStatus.CREATED);
     }
     //@Secured(value={"ROLE_AGENT"})
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Catégorie> updateCatégorie(@RequestBody Catégorie catégorie){
         Catégorie UpdateCatégorie= catégorieService.updateCatégorie(catégorie);
         return new ResponseEntity<>(UpdateCatégorie, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping("/delete/{NomC}")
-    public ResponseEntity<?> deleteCatégorie(@PathVariable("NomC") String NomC){
-        catégorieService.deleteCatégorie(NomC);
+    @DeleteMapping("/delete/{idCt}")
+    public ResponseEntity<?> deleteCatégorie(@PathVariable("idCt") Long idCt){
+        catégorieService.deleteCatégorie(idCt);
         return new ResponseEntity<>( HttpStatus.OK);
     }
 }

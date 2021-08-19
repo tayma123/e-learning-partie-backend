@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
+
 
 @Service
 @Transactional
@@ -43,13 +45,24 @@ public class CoursService {
 
     }
 
-public void deleteCours(String name) {
-            coursRepo.deleteCoursByName(name);
+    public void deleteCours(String name) {
+        coursRepo.deleteCoursByName(name);
     }
 
 
     public Cours findCoursByTitre(String titre) {
         return coursRepo.findCoursByTitre(titre).orElseThrow(() -> new CoursNotFoundException("user not found"));
     }
+
+    /* public Set <Cours> findByCatégorie(String nomC) {   return coursRepo.findByCatégorie(nomC);
+     }
+ */
+    public Set<Cours> findByUserName(String userName) {  return coursRepo.findCoursByUserName(userName).orElseThrow(() -> new CoursNotFoundException("user not found"));
+
+    }
+    public Set<Cours> findByCatégorie(Long idCt) {  return coursRepo.findCoursByCatégorie(idCt).orElseThrow(() -> new CoursNotFoundException("Cours not found"));
+
+    }
 }
+
 

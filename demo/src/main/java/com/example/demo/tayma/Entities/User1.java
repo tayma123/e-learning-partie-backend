@@ -12,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+//@SecondaryTables({@SecondaryTable(name="cours",pkJoinColumns =@PrimaryKeyJoinColumn(name="userName"))})
 public class User1 implements Serializable {
 
     @Id
@@ -26,20 +27,10 @@ public class User1 implements Serializable {
     private String userName ;
     private String passWord ;
     private String adress;
-    private String hoho;
 
     private boolean isEnabled;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @ManyToMany
-    @JoinTable(
-            name = "course_like",
-            joinColumns = @JoinColumn(name = "apprenant_id"),
-            inverseJoinColumns = @JoinColumn(name = "cours_id"))
-    Set<Cours> likedCourses;
-
-
-
 
     public int getId() {
         return id;

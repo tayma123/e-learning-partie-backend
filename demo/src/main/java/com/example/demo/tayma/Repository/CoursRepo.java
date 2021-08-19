@@ -7,8 +7,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
+import java.util.Set;
 
 public interface CoursRepo extends JpaRepository<Cours,Long> {
+
 
 
     void deleteCoursByIdCr(Long id);
@@ -22,4 +24,9 @@ public interface CoursRepo extends JpaRepository<Cours,Long> {
 
 
     Optional<Cours> findCoursByTitre(String titre);
+
+    /*  Set<Cours> findByCatégorie(String nomC);*/
+    Optional<Set<Cours>> findCoursByCatégorie(Long idCt);
+
+    Optional<Set<Cours>> findCoursByUserName(String userName);
 }
