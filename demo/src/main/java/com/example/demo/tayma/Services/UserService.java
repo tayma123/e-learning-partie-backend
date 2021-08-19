@@ -5,6 +5,7 @@ package com.example.demo.tayma.Services;
 import com.example.demo.tayma.Entities.User1;
 import com.example.demo.tayma.Entities.UserTest;
 import com.example.demo.tayma.Repository.UserRepository;
+/*
 import com.example.demo.tayma.Security.JwtUtils;
 import com.example.demo.tayma.Security.Request.LoginForm;
 import com.example.demo.tayma.Security.Request.SignUpForm;
@@ -12,13 +13,16 @@ import com.example.demo.tayma.Security.Response.SignInResponse;
 import com.example.demo.tayma.mail.ConfirmationToken;
 import com.example.demo.tayma.mail.ConfirmationTokenRepository;
 import com.example.demo.tayma.mail.EmailService;
+*/
 import com.example.demo.tayma.utils.ErrorModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+/*
 import org.springframework.mail.SimpleMailMessage;
+/*
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,6 +30,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+*/
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,10 +41,13 @@ import java.util.Optional;
 @Service
 @Configuration
 @Transactional
+/*
 @EnableWebSecurity
+*/
 public class UserService {
     @Autowired
     UserRepository userRepository;
+    /*
  @Autowired
  ConfirmationTokenRepository confirmationTokenRepository;
     @Autowired
@@ -47,7 +56,7 @@ public class UserService {
     JwtUtils jwtUtils ;
     @Autowired
     AuthenticationManager authenticationManager;
-
+/*
     public ResponseEntity<?> addUser(UserTest userTest){
         User1 user=new User1();
         user.setEmail(userTest.getEmail());
@@ -145,7 +154,7 @@ public class UserService {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+*/
     public ResponseEntity<?> deleteByUserName(String userName){
         if(!userRepository.findByUserName(userName).isPresent())
             return new ResponseEntity<>(new ErrorModel("User Not Found"),HttpStatus.BAD_REQUEST);
@@ -153,6 +162,9 @@ public class UserService {
         userRepository.deleteById(id);
         return new ResponseEntity<>(new ErrorModel("User Deleted"),HttpStatus.OK);
 
+    }
+    public User1 getOneByUserName (String userName){
+        return userRepository.getOneByUserName(userName);
     }
     public ResponseEntity<?> getByUserName(String userName){
         if(!userRepository.findByUserName(userName).isPresent())
@@ -174,6 +186,7 @@ public class UserService {
         User1 user=userRepository.findByEmail(email).get();
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
+    /*
     public ResponseEntity<?> updateUser(String userName, User1 updatedUser) {
         Optional<User1> UserOptional = userRepository.findOneByUserName(userName);
 
@@ -192,7 +205,7 @@ public class UserService {
         databaseUser.setRole(updatedUser.getRole());
         userRepository.save(databaseUser);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
+    }*/
     public List<User1>getAll(){
         return  userRepository.findAll();
 
@@ -201,10 +214,11 @@ public class UserService {
         userRepository.deleteUserByUserName(userName);
 
     }
+    /*
     public User1 updateUser1(User1 user) {
         String password = passwordEncoder().encode(user.getPassWord());
         user.setPassWord(password);
         return userRepository.save(user);
     }
-
+*/
 }

@@ -1,4 +1,5 @@
 package com.example.demo.tayma.Security.Request;
+/*
 import com.example.demo.tayma.Entities.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -78,3 +79,4 @@ public class SignUpForm {
 	public Role getRole() { return role; }
 	public void setRole(Role role) { this.role = role; }
 }
+*/

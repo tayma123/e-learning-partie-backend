@@ -1,4 +1,5 @@
 package com.example.demo.tayma.Security.Response;
+/*
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -42,4 +43,4 @@ public  class SignInResponse {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
-}
+}*/

@@ -1,5 +1,5 @@
 package com.example.demo.tayma.mail;
-
+/*
 
 import com.example.demo.tayma.Entities.User1;
 
@@ -70,4 +70,4 @@ public class ConfirmationToken {
     }
 }
 
-
+*/

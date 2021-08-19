@@ -1,6 +1,6 @@
 package com.example.demo.tayma.Controller;
 
-
+/*
 
 import com.example.demo.tayma.Entities.User1;
 import com.example.demo.tayma.Entities.UserTest;
@@ -99,7 +99,7 @@ public class UserController1 {
     @GetMapping("user/export/pdf")
     /*@PreAuthorize("hasRole('APPRENANT'),hasRole('ADMIN')")*/
 
-    public ResponseEntity<InputStreamResource> exportTermsPDF() {
+  /*  public ResponseEntity<InputStreamResource> exportTermsPDF() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<User1> user = userRepository.findByUserName(authentication.getName());
 
@@ -134,7 +134,7 @@ public class UserController1 {
 
         return modelAndView;
     }
-   
+
 /*
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView displayRegistration(ModelAndView modelAndView, User1 user) {
@@ -192,10 +192,10 @@ public class UserController1 {
 
         return modelAndView;
     }
-*/
+*//*
 @PostMapping("/update")
 public ResponseEntity<User1> updateUser(@RequestBody User1 user){
     User1 UpdateUser= userService.updateUser1(user);
     return new ResponseEntity<>(UpdateUser, HttpStatus.OK);
 }
-}
+}*/

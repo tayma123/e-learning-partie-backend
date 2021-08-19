@@ -1,5 +1,5 @@
 package com.example.demo.tayma.Security.Request;
-
+/*
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,3 +25,4 @@ public class LoginForm {
     
     
 }
+*/

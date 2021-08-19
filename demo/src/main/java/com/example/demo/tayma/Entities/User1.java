@@ -1,16 +1,11 @@
 package com.example.demo.tayma.Entities;
 
 
-import com.example.demo.tayma.Entities.User1;
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
-@Getter
-@Setter
 @Entity
 public class User1 implements Serializable {
 
@@ -29,13 +24,18 @@ public class User1 implements Serializable {
     private boolean isEnabled;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @ManyToMany
+
+   /* @ManyToMany
     @JoinTable(
             name = "course_like",
             joinColumns = @JoinColumn(name = "apprenant_id"),
             inverseJoinColumns = @JoinColumn(name = "cours_id"))
-    Set<Cours> likedCourses;
-
+    Set<Cours> likedCourses;*/
+    /*
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<ApprenantCourses> Inscriptions;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Cours> CoursEnseignant;*/
 
 
 
@@ -153,4 +153,25 @@ public class User1 implements Serializable {
         this.isEnabled = isEnabled;
         this.role = role;
     }
+/*
+    public Set<Cours> getCoursEnseignant() {
+        return CoursEnseignant;
+    }
+
+    public void setCoursEnseignant(Set<Cours> coursEnseignant) {
+        CoursEnseignant = coursEnseignant;
+    }
+
+    public void addCours(Cours cours) {
+        if (CoursEnseignant.contains(cours))
+            return;
+        CoursEnseignant.add(cours);
+    }
+    public void addInscription(ApprenantCourses apprenantCourses) {
+        if (Inscriptions.contains(apprenantCourses))
+            return;
+
+        Inscriptions.add(apprenantCourses);
+    }*/
+
 }

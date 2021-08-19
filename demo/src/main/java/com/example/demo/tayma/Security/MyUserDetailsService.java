@@ -1,5 +1,5 @@
 package com.example.demo.tayma.Security;
-
+/*
 
 import com.example.demo.tayma.Entities.User1;
 import com.example.demo.tayma.Repository.UserRepository;
@@ -32,3 +32,4 @@ public class MyUserDetailsService implements UserDetailsService {
 
     }}
 
+*/
