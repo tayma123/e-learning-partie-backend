@@ -22,15 +22,40 @@ public class CoursController {
     public CoursController(CoursService coursService, CatégorieService catégorieService, UserService userService) {
         this.coursService = coursService;
         this.catégorieService = catégorieService;
-        this.userService = userService;
-    }
+        this.userService = userService; }
 
     @GetMapping("/all")
     public ResponseEntity<List<Cours>> getAllCours(){
         List<Cours> cours=coursService.findAllCours();
-        return new ResponseEntity<>(cours, HttpStatus.OK);
+        return new ResponseEntity<>(cours, HttpStatus.OK); }
+    @GetMapping("/findByUsername/{userName}")
+    public ResponseEntity<Set<Cours>> getCoursByUsername(@PathVariable("userName") String userName){
+        Set<Cours> cours= coursService.findByUserName(userName);
+        return new ResponseEntity<>(cours, HttpStatus.OK); }
+    @PostMapping("/add")
+    public ResponseEntity<Cours> addCours(@RequestBody Cours cours){
+        Cours newCours= coursService.addCours(cours);
+        return new ResponseEntity<>(newCours, HttpStatus.CREATED); }
+    //Methode pour ajouter par un enseignant
+    @PostMapping("/addByCategorie/{idCt}/{userName}")
+    public ResponseEntity<Cours> addByCatégorie(@RequestBody Cours cours,@PathVariable("idCt") Long idCt,@PathVariable("userName") String userName){
+        Catégorie catégorie=catégorieService.findCatégorieByIdCt(idCt);
+        catégorie.addCours(cours);
+        cours.setUserName(userName);
+        cours.setIdCt(idCt);
+        Cours newCours= coursService.addCours(cours);
+        return new ResponseEntity<>(newCours, HttpStatus.CREATED);
     }
-
+    @PutMapping("/update")
+    public ResponseEntity<Cours> updateUser(@RequestBody Cours cours){
+        Cours UpdateCours= coursService.updateCours(cours);
+        return new ResponseEntity<>(UpdateCours, HttpStatus.OK);
+    }
+    @DeleteMapping("/{idCr}")
+    public ResponseEntity<?> deleteCours(@PathVariable("idCr") Long idCr) {
+        coursService.deleteCours(idCr);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @GetMapping("/find/{titre}")
     public ResponseEntity<Cours> getCoursByTitre(@PathVariable("titre") String titre){
         Cours cours= coursService.findCoursByTitre(titre);
@@ -44,39 +69,5 @@ public class CoursController {
         Set<Cours> coursList=catégorie.getCoursList();
         return new ResponseEntity<>(coursList, HttpStatus.OK);
     }
-    @GetMapping("/findByUsername/{userName}")
-    public ResponseEntity<Set<Cours>> getCoursByUsername(@PathVariable("userName") String userName){
-        Set<Cours> cours= coursService.findByUserName(userName);
-        return new ResponseEntity<>(cours, HttpStatus.OK);
-    }
 
-    @PostMapping("/add")
-    public ResponseEntity<Cours> addCours(@RequestBody Cours cours){
-        Cours newCours= coursService.addCours(cours);
-        return new ResponseEntity<>(newCours, HttpStatus.CREATED);
-    }
-
-    //Methode pour ajouter par un enseignant
-    @PostMapping("/addByCategorie/{idCt}/{userName}")
-    public ResponseEntity<Cours> addByCatégorie(@RequestBody Cours cours,@PathVariable("idCt") Long idCt,@PathVariable("userName") String userName){
-        Catégorie catégorie=catégorieService.findCatégorieByIdCt(idCt);
-        catégorie.addCours(cours);
-        cours.setUserName(userName);
-        cours.setIdCt(idCt);
-        Cours newCours= coursService.addCours(cours);
-        return new ResponseEntity<>(newCours, HttpStatus.CREATED);
-    }
-
-    //@Secured(value={"ROLE_AGENT"})
-    @PutMapping("/update")
-    public ResponseEntity<Cours> updateUser(@RequestBody Cours cours){
-        Cours UpdateCours= coursService.updateCours(cours);
-        return new ResponseEntity<>(UpdateCours, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{idCr}")
-    public ResponseEntity<?> deleteCours(@PathVariable("idCr") Long idCr) {
-        coursService.deleteCours(idCr);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

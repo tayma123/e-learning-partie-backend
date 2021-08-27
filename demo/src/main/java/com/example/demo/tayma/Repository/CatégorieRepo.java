@@ -11,13 +11,10 @@ public interface CatégorieRepo  extends JpaRepository<Catégorie,Long> {
 
     void deleteCatégorieByIdCt(Long idCt);
 
-
-
     Optional<Catégorie> findCatégorieByIdCt(Long idCt);
     @Modifying
     @Query("delete from Catégorie where NomC=?1")
     void deleteCatégorieByNomC(String NomC);
-
 
     Optional<Catégorie> findCatégorieByNomC(String NomC);
 }

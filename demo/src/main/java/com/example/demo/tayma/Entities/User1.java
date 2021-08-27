@@ -12,9 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-//@SecondaryTables({@SecondaryTable(name="cours",pkJoinColumns =@PrimaryKeyJoinColumn(name="userName"))})
 public class User1 implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
@@ -23,15 +21,12 @@ public class User1 implements Serializable {
     private String email ;
     private String telephone ;
     private String gender ;
-
     private String userName ;
     private String passWord ;
     private String adress;
-
     private boolean isEnabled;
     @Enumerated(EnumType.STRING)
     private Role role;
-
     public int getId() {
         return id;
     }

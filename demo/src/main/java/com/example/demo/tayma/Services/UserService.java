@@ -47,7 +47,6 @@ public class UserService {
     JwtUtils jwtUtils ;
     @Autowired
     AuthenticationManager authenticationManager;
-
     public ResponseEntity<?> addUser(UserTest userTest){
         User1 user=new User1();
         user.setEmail(userTest.getEmail());
@@ -61,15 +60,10 @@ public class UserService {
         user.setTelephone(userTest.getTelephone());
         user.setUserName(userTest.getUserName());
         user.setEnabled(true);
-
-
         userRepository.save(user);
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
-
-
     public ResponseEntity<?> signUp (SignUpForm signUpForm){
-
 
         if (userRepository.findByUserName(signUpForm.getUserName()).isPresent()){
             return  new ResponseEntity<>(new ErrorModel("user name is used"),HttpStatus.BAD_REQUEST);
@@ -80,7 +74,6 @@ public class UserService {
         if(!isValidEmailAddress(signUpForm.getEmail())){
             return  new ResponseEntity<>(new ErrorModel("Invalid email"),HttpStatus.BAD_REQUEST);
         }
-
         else {
             User1 user = new User1();
             user.setFirstName(signUpForm.getFirstName());
@@ -96,9 +89,7 @@ public class UserService {
             user.setEnabled(false);
             userRepository.save(user);
              ConfirmationToken confirmationToken = new ConfirmationToken(user);
-
             confirmationTokenRepository.save(confirmationToken);
-
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(user.getUserName());
             mailMessage.setSubject("Complete Registration!");
@@ -108,19 +99,9 @@ public class UserService {
 
             emailService.sendEmail(mailMessage);
         }
-
-
         String token= jwtUtils.generateToken(signUpForm.getUserName());
         return new ResponseEntity<>(signUpForm.getRole(),HttpStatus.OK);
-
-
-
-
-
-
     }
-
-
     public boolean isValidEmailAddress(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
@@ -129,30 +110,15 @@ public class UserService {
     }
 
     public ResponseEntity<?> signIn ( LoginForm loginform) {
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginform.getUserName(), loginform.getPassWord()));
-
-
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginform.getUserName(), loginform.getPassWord()));
         String jwt = jwtUtils.generateToken(loginform.getUserName());
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return new ResponseEntity<>(new SignInResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()),HttpStatus.ACCEPTED); }
 
-        return new ResponseEntity<>(new SignInResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()),HttpStatus.ACCEPTED);
-    }
-
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    public ResponseEntity<?> deleteByUserName(String userName){
-        if(!userRepository.findByUserName(userName).isPresent())
-            return new ResponseEntity<>(new ErrorModel("User Not Found"),HttpStatus.BAD_REQUEST);
-        int id=userRepository.findByUserName(userName).get().getId();
-        userRepository.deleteById(id);
-        return new ResponseEntity<>(new ErrorModel("User Deleted"),HttpStatus.OK);
-
+    public User1 updateUser1(User1 user) {
+        String password = passwordEncoder().encode(user.getPassWord());
+        user.setPassWord(password);
+        return userRepository.save(user);
     }
     public ResponseEntity<?> getByUserName(String userName){
         if(!userRepository.findByUserName(userName).isPresent())
@@ -178,9 +144,7 @@ public class UserService {
         Optional<User1> UserOptional = userRepository.findOneByUserName(userName);
 
         User1 databaseUser = UserOptional.get();
-
-
-                databaseUser.setFirstName(updatedUser.getFirstName());
+        databaseUser.setFirstName(updatedUser.getFirstName());
         databaseUser.setGender(updatedUser.getGender());
         databaseUser.setAdress(updatedUser.getAdress());
         databaseUser.setTelephone(updatedUser.getTelephone());
@@ -193,18 +157,17 @@ public class UserService {
         userRepository.save(databaseUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    public List<User1>getAll(){
-        return  userRepository.findAll();
-
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-    public void deleteUser(String userName) {
-        userRepository.deleteUserByUserName(userName);
+    public ResponseEntity<?> deleteByUserName(String userName){
+        if(!userRepository.findByUserName(userName).isPresent())
+            return new ResponseEntity<>(new ErrorModel("User Not Found"),HttpStatus.BAD_REQUEST);
+        int id=userRepository.findByUserName(userName).get().getId();
+        userRepository.deleteById(id);
+        return new ResponseEntity<>(new ErrorModel("User Deleted"),HttpStatus.OK); }
+    public List<User1>getAll(){ return  userRepository.findAll(); }
+    public void deleteUser(String userName) { userRepository.deleteUserByUserName(userName); }
 
-    }
-    public User1 updateUser1(User1 user) {
-        String password = passwordEncoder().encode(user.getPassWord());
-        user.setPassWord(password);
-        return userRepository.save(user);
-    }
-
-}
+   }

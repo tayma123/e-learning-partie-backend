@@ -1,7 +1,4 @@
 package com.example.demo.tayma.Controller;
-
-
-
 import com.example.demo.tayma.Entities.User1;
 import com.example.demo.tayma.Entities.UserTest;
 import com.example.demo.tayma.Repository.UserRepository;
@@ -48,48 +45,25 @@ public class UserController1 {
     private ConfirmationTokenRepository confirmationTokenRepository;
     @Autowired
     private EmailService emailService;
-
     @PostMapping("/addUser")
     public ResponseEntity<?> addUser(@RequestBody UserTest user) {
         return userService.addUser(user);
     }
-
     @PostMapping("/auth/signUp")
     public ResponseEntity<?> SignUp(@RequestBody SignUpForm signUpForm) {
         return userService.signUp(signUpForm);
     }
-
     @PostMapping("/auth/signIn")
     public ResponseEntity<?> signIn(@RequestBody LoginForm loginForm) {
         return userService.signIn(loginForm);
     }
-
     @DeleteMapping("/deleteByUserName")
     public ResponseEntity<?> deleteByUserName(@RequestParam String userName) {
-        return userService.deleteByUserName(userName);
-    }
-
-    @PutMapping("/updateByUserName/{userName}")
-    public ResponseEntity<?> updateUser(@PathVariable String userName, @RequestBody User1 updatedUser) {
-        return userService.updateUser(userName, updatedUser);
-    }
-
-    @GetMapping("/getByEmail")
-    public ResponseEntity<?> getByEmail(@RequestParam String email) {
-        return userService.getByEmail(email);
-    }
-
-    @GetMapping("/getByUserName/{userName}")
-    public ResponseEntity<?> getByUserName(@PathVariable("userName") String userName) {
-        return userService.getByUserName(userName);
-    }
-
-    @PreAuthorize("hasAnyAuthority({'Admin'})")
-    @GetMapping("/getById}")
-    public ResponseEntity<?> getById(@RequestParam int id) {
-        return userService.getById(id);
-    }
-
+        return userService.deleteByUserName(userName); }
+    @PostMapping("/update")
+    public ResponseEntity<User1> updateUser(@RequestBody User1 user){
+        User1 UpdateUser= userService.updateUser1(user);
+        return new ResponseEntity<>(UpdateUser, HttpStatus.OK); }
     @GetMapping("/getAll")
     public ResponseEntity<List<User1>> getAll() {
         List<User1> users = userService.getAll();
@@ -97,8 +71,6 @@ public class UserController1 {
     }
 
     @GetMapping("user/export/pdf")
-    /*@PreAuthorize("hasRole('APPRENANT'),hasRole('ADMIN')")*/
-
     public ResponseEntity<InputStreamResource> exportTermsPDF() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<User1> user = userRepository.findByUserName(authentication.getName());
@@ -133,6 +105,28 @@ public class UserController1 {
         }
 
         return modelAndView;
+    }
+
+
+    @PutMapping("/updateByUserName/{userName}")
+    public ResponseEntity<?> updateUser(@PathVariable String userName, @RequestBody User1 updatedUser) {
+        return userService.updateUser(userName, updatedUser);
+    }
+
+    @GetMapping("/getByEmail")
+    public ResponseEntity<?> getByEmail(@RequestParam String email) {
+        return userService.getByEmail(email);
+    }
+
+    @GetMapping("/getByUserName/{userName}")
+    public ResponseEntity<?> getByUserName(@PathVariable("userName") String userName) {
+        return userService.getByUserName(userName);
+    }
+
+    @PreAuthorize("hasAnyAuthority({'Admin'})")
+    @GetMapping("/getById}")
+    public ResponseEntity<?> getById(@RequestParam int id) {
+        return userService.getById(id);
     }
    
 /*
@@ -193,9 +187,5 @@ public class UserController1 {
         return modelAndView;
     }
 */
-@PostMapping("/update")
-public ResponseEntity<User1> updateUser(@RequestBody User1 user){
-    User1 UpdateUser= userService.updateUser1(user);
-    return new ResponseEntity<>(UpdateUser, HttpStatus.OK);
-}
+
 }

@@ -11,18 +11,15 @@ public class Certificat {
     @JoinColumn(name="idCr")
     private  Cours cours;
     private String intitulé;
-
     public Certificat(Cours cours, String intitulé) {
         this.cours = cours;
         this.intitulé = intitulé;
     }
-
     public Certificat(Long id, Cours cours, String intitulé) {
         this.id = id;
         this.cours = cours;
         this.intitulé = intitulé;
     }
-
     public Certificat() {
     }
 

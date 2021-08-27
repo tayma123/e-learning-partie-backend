@@ -10,25 +10,19 @@ import java.util.UUID;
 @Entity
 @Table(name="confirmationToken")
 public class ConfirmationToken {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "token_id")
     private long tokenid;
-
     @Column(name = "confirmation_token")
     private String confirmationToken;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-
     @OneToOne(targetEntity = User1.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "id")
     private User1 user;
-
     public ConfirmationToken() {
     }
-
     public ConfirmationToken(User1 user) {
         this.user = user;
         createdDate = new Date();

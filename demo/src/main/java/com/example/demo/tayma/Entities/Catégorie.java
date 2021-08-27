@@ -12,17 +12,14 @@ public class    Catégorie implements Serializable {
     private Long idCt;
     private String nomC;
 
-    @OneToMany(mappedBy = "catégorie", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "catégorie", fetch = FetchType.EAGER,cascade=CascadeType.ALL)
     private Set<Cours> coursList;
-    public Catégorie() {
-
-    }
+    public Catégorie() { }
 
     public Catégorie(Long idCt, String nomC, Set<Cours> coursList) {
         this.idCt = idCt;
         this.nomC = nomC;
-        this.coursList = coursList;
-    }
+        this.coursList = coursList; }
 
     public Long getIdCt() {
         return idCt;
@@ -40,7 +37,6 @@ public class    Catégorie implements Serializable {
     public Set<Cours> getCoursList() {
         return coursList;
     }
-
     public void setCoursList(Set<Cours> coursList) {
         this.coursList = coursList;
     }

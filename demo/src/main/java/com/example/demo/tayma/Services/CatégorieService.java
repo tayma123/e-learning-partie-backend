@@ -23,22 +23,19 @@ public class CatégorieService {
     }
 
     public Catégorie findCatégorieByIdCt(Long idCt) {
-        return
-                catégorieRepo.findCatégorieByIdCt(idCt).orElseThrow(() -> new CoursNotFoundException("categorie not found"));
-    }
+        return catégorieRepo.findCatégorieByIdCt(idCt).orElseThrow(() -> new CoursNotFoundException("categorie not found")); }
 
-    public Catégorie addCatégorie(Catégorie catégorie) {
-
-        return catégorieRepo.save(catégorie);
-    }
+    public Catégorie addCatégorie(Catégorie catégorie) { return catégorieRepo.save(catégorie); }
 
     public Catégorie updateCatégorie(Catégorie catégorie) {
         return catégorieRepo.save(catégorie);
     }
 
     public void deleteCatégorie(Long idCt) {
-        catégorieRepo.deleteCatégorieByIdCt(idCt);
+        catégorieRepo.deleteCatégorieByIdCt(idCt); }
 
+    public Catégorie findCatégorieByNomC(String NomC) {
+        return catégorieRepo.findCatégorieByNomC(NomC).orElseThrow(() -> new CoursNotFoundException("catégorie not found"));
     }
 
     public void deleteCatégorie(String NomC) {
@@ -46,7 +43,4 @@ public class CatégorieService {
 
     }
 
-    public Catégorie findCatégorieByNomC(String NomC) {
-        return catégorieRepo.findCatégorieByNomC(NomC).orElseThrow(() -> new CoursNotFoundException("catégorie not found"));
-    }
 }

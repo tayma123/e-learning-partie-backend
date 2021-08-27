@@ -11,22 +11,21 @@ import java.util.Set;
 
 public interface CoursRepo extends JpaRepository<Cours,Long> {
 
-
-
-    void deleteCoursByIdCr(Long id);
-
-
+    @Modifying
+    @Query("delete from Cours where idCr=?1")
+    void deleteCoursById(Long idCr);
 
     Optional<Cours> findCoursByIdCr(Long idCr);
-    @Modifying
-    @Query("delete from Cours where Name=?1")
-    void deleteCoursByName(String Name);
 
-
-    Optional<Cours> findCoursByTitre(String titre);
-
-    /*  Set<Cours> findByCatégorie(String nomC);*/
     Optional<Set<Cours>> findCoursByCatégorie(Long idCt);
 
     Optional<Set<Cours>> findCoursByUserName(String userName);
+
+    Optional<Cours> findCoursByTitre(String titre);
+
+
+
+    @Modifying
+    @Query("delete from Cours where Name=?1")
+    void deleteCoursByName(String Name);
 }
