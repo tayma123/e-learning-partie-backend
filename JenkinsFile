@@ -2,7 +2,7 @@ pipeline{
  agent any 
  stages{stage("build")
  {
- steps{ Run TestApplication.main()
+ steps{echo "testing app"
  }
  }
  stage("test")
